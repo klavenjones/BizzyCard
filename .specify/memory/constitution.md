@@ -1,31 +1,41 @@
 <!--
 Sync Impact Report
 ===================
-Version: INITIAL → 1.0.0
-Change Type: Initial Ratification
+Version: 1.0.0 → 1.1.0
+Change Type: Minor Amendment (New Principle Added)
 Date: 2025-11-21
 
-Principles Created:
-  1. Code Quality & Type Safety
-  2. Testing Standards
-  3. User Experience Consistency
-  4. Security Requirements
-  5. Performance Requirements
+Principles Modified:
+  - Added Principle VI: Expo & React Native Best Practices
 
-Additional Sections:
-  - Development Workflow
-  - Quality Gates
-  - Governance
+Rationale:
+  This amendment adds comprehensive Expo and React Native best practices to guide
+  mobile development patterns. This expands the constitution's guidance without
+  weakening or removing existing requirements, qualifying as a MINOR version bump.
+
+Key Additions:
+  - Expo Router file-based routing conventions
+  - React Navigation best practices
+  - Expo-specific APIs and tooling guidance
+  - React Native hooks and lifecycle patterns
+  - Platform-specific code handling
+  - Asset and resource management
+  - Development workflow with Expo CLI and EAS
 
 Templates Status:
-  ✅ plan-template.md - Reviewed, Constitution Check section aligns with new principles
-  ✅ spec-template.md - Reviewed, User Scenarios and Requirements sections support principles
-  ✅ tasks-template.md - Reviewed, Test-first approach and phased structure align with principles
+  ✅ plan-template.md - No changes required, Constitution Check section remains valid
+  ✅ spec-template.md - No changes required, supports new principle requirements
+  ✅ tasks-template.md - No changes required, test-first approach compatible
+
+Impact on Existing Code:
+  - Existing code should be reviewed for compliance with new Expo/RN best practices
+  - Non-compliant patterns should be flagged as technical debt and tracked
+  - New features MUST comply with all principles including new Principle VI
 
 Follow-up Actions:
-  - Constitution is now active and enforceable
-  - All new features must pass Constitution Check in plan.md
-  - Code reviews must verify compliance with these principles
+  - Review existing codebase for Expo/RN best practices compliance
+  - Update code review checklist to include Principle VI items
+  - Schedule team discussion on principle implementation and clarifications needed
 -->
 
 # BizzyCard Constitution
@@ -155,6 +165,108 @@ Proactive security practices prevent data breaches, protect user privacy, and ma
 user satisfaction, retention, and app store ratings. Setting explicit targets ensures
 performance is prioritized throughout development.
 
+### VI. Expo & React Native Best Practices
+
+**MUST Requirements:**
+
+**Navigation & Routing:**
+- ALL navigation MUST use Expo Router with file-based routing (no manual route configuration)
+- Route files MUST follow Expo Router naming conventions:
+  - `_layout.tsx` for layout wrappers and navigation structure
+  - `[param].tsx` for dynamic routes
+  - `(group)` folders for route groups without affecting URL structure
+  - `+html.tsx` for root HTML structure (web support)
+- Navigation actions MUST use `router.push()`, `router.replace()`, or `router.back()` from
+  `expo-router`
+- Deep linking MUST be configured in `app.json` with appropriate URL schemes
+- NO direct usage of React Navigation APIs; use Expo Router abstractions
+
+**React Hooks & Component Patterns:**
+- Components MUST use functional components with hooks (NO class components)
+- State management MUST use appropriate hooks:
+  - `useState` for local component state
+  - `useReducer` for complex state logic
+  - `useContext` for shared state across component trees
+  - `useMemo` and `useCallback` to prevent unnecessary re-renders (profile first)
+- Side effects MUST use `useEffect` with proper dependency arrays and cleanup functions
+- Custom hooks MUST:
+  - Start with `use` prefix
+  - Be pure functions that can be composed
+  - Document their dependencies and side effects
+- NO hooks inside conditionals, loops, or nested functions
+
+**Expo-Specific APIs:**
+- File system operations MUST use `expo-file-system` (not Node.js `fs`)
+- Secure data storage MUST use `expo-secure-store` (see Security Requirements)
+- Camera and media MUST use `expo-camera` and `expo-image-picker`
+- Location services MUST use `expo-location` with proper permission handling
+- Sensors MUST use respective Expo modules (`expo-accelerometer`, `expo-gyroscope`, etc.)
+- Push notifications MUST use `expo-notifications`
+- App metadata (name, version, icons) MUST be configured in `app.json`
+- Environment variables MUST use Expo's environment configuration (no `react-native-config`)
+
+**Platform-Specific Code:**
+- Platform detection MUST use `Platform.OS` or `Platform.select()`
+- Platform-specific files MUST use extensions: `.ios.tsx`, `.android.tsx`, `.web.tsx`
+- Platform-specific code MUST be minimized; prefer cross-platform solutions
+- Native modules (if required) MUST:
+  - Be justified in Complexity Tracking section
+  - Include fallbacks for unsupported platforms
+  - Be documented with usage examples
+
+**Styling & Theming:**
+- Styles MUST use NativeWind (Tailwind CSS for React Native) as configured
+- NO inline StyleSheet.create() except for dynamic styles that cannot be expressed in Tailwind
+- Theme values (colors, spacing, typography) MUST be defined in `tailwind.config.js`
+- Responsive styles MUST use Tailwind breakpoints (`sm:`, `md:`, `lg:`)
+- Dark mode MUST be handled via NativeWind's `dark:` variant
+- Avoid `Dimensions.get()` for responsive layouts; prefer Tailwind utilities
+
+**Assets & Resources:**
+- Images MUST be optimized before committing (use `expo-optimize` or manual compression)
+- App icons MUST be configured in `app.json` with adaptive icons for Android
+- Splash screen MUST be configured in `app.json` (use `expo-splash-screen` for programmatic
+  control)
+- Fonts MUST be loaded using `expo-font` with proper loading states
+- Static assets MUST be placed in `assets/` directory
+- Large assets (>1MB) MUST be loaded asynchronously with loading indicators
+
+**Development Workflow:**
+- Development MUST use Expo CLI (`expo start`) for dev server
+- Hot reload MUST be leveraged (avoid full app restarts)
+- Testing on physical devices MUST use Expo Go or development builds
+- Production builds MUST use EAS Build (no local builds for App Store/Play Store)
+- Over-the-air updates MUST use EAS Update for non-native changes
+- Environment-specific builds MUST be configured in `eas.json`
+- NO `expo eject` unless absolutely necessary and approved; use config plugins instead
+
+**Permissions & Privacy:**
+- Permissions MUST be requested only when needed (not at app launch)
+- Permission requests MUST include clear explanation of why permission is needed
+- ALL required permissions MUST be declared in `app.json` (`ios.infoPlist`, `android.permissions`)
+- Apps MUST handle permission denial gracefully
+- Location permissions MUST request least privilege (foreground only unless background required)
+
+**Error Handling:**
+- Errors MUST be caught and displayed with user-friendly messages
+- Network errors MUST be handled with retry mechanisms and offline states
+- Unhandled errors MUST be caught with error boundaries
+- Development errors MUST use `__DEV__` flag for additional logging
+- Production error tracking MUST use a service (e.g., Sentry) via Expo config plugins
+
+**Offline Support:**
+- Apps MUST detect network connectivity using `expo-network` or `@react-native-community/netinfo`
+- Critical data MUST be cached locally for offline access
+- Offline actions MUST be queued and synced when connection restored
+- UI MUST clearly indicate offline state
+
+**Rationale:** Expo and React Native have evolved best practices that prevent common pitfalls,
+improve performance, and ensure cross-platform compatibility. Following these patterns ensures
+the app leverages Expo's strengths, maintains upgrade compatibility, and provides a consistent
+development experience. Expo Router file-based routing reduces boilerplate and keeps navigation
+logic colocated with screens. Using Expo's managed workflow maximizes over-the-air update
+capabilities and simplifies build processes.
+
 ## Development Workflow
 
 ### Code Review Requirements
@@ -166,6 +278,7 @@ performance is prioritized throughout development.
   - No security vulnerabilities introduced
   - Performance implications considered
   - Accessibility requirements met
+  - Expo/React Native best practices followed (Principle VI)
 - Breaking changes MUST be documented and communicated to the team
 - Technical debt MUST be justified and tracked (create follow-up issues)
 
@@ -183,6 +296,7 @@ performance is prioritized throughout development.
 - Architecture decisions MUST be documented in `/specs/` directory
 - API integrations MUST document endpoints, authentication, and error handling
 - Environment setup MUST be documented in README.md
+- Expo configuration changes MUST be documented with rationale
 
 ## Quality Gates
 
@@ -191,6 +305,7 @@ performance is prioritized throughout development.
 - TypeScript compilation succeeds (no errors)
 - Prettier formatting applied
 - ESLint passes with no errors (warnings are acceptable if justified)
+- Expo CLI validates `app.json` configuration (run `expo doctor` if available)
 
 ### Pre-Merge Gates (CI/CD)
 
@@ -198,7 +313,8 @@ performance is prioritized throughout development.
 - Code coverage meets thresholds
 - No critical or high severity security vulnerabilities
 - Bundle size has not increased unexpectedly (>10% without justification)
-- iOS and Android builds succeed
+- iOS and Android builds succeed (via EAS Build or local builds)
+- Expo SDK version compatibility verified
 
 ### Pre-Release Gates
 
@@ -207,6 +323,8 @@ performance is prioritized throughout development.
 - Performance profiling completed (no significant regressions)
 - Security review completed for features touching sensitive data
 - Accessibility audit completed for new UI
+- App Store and Play Store metadata updated
+- EAS Update configured for production channel
 
 ## Governance
 
@@ -248,4 +366,4 @@ performance is prioritized throughout development.
 - Constitution should enable development velocity, not hinder it
 - When principles conflict with pragmatism, document the tradeoff and decide explicitly
 
-**Version**: 1.0.0 | **Ratified**: 2025-11-21 | **Last Amended**: 2025-11-21
+**Version**: 1.1.0 | **Ratified**: 2025-11-21 | **Last Amended**: 2025-11-21
