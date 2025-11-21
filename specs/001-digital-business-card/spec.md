@@ -5,23 +5,36 @@
 **Status**: Draft  
 **Input**: User description: "Build a mobile application for tech professionals that functions as a digital business card and makes it easy to create, share, and manage networking information. The app should let users create a personal profile with fields like name, title, email, phone number, company, role, short bio, and customizable tags, plus add social links (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub, portfolio site, and other platforms) and optionally upload and attach a resume. The UI should include: an onboarding flow to set up the first digital card; a main 'My Card' screen showing a preview of the user's digital card with clear access to edit details, social links, and resume; a dedicated 'Share' screen that prominently displays a QR code, along with quick actions for AirDrop, email, SMS, copying a share link, and sending a .vcf file; and a 'Network' or 'Contacts' tab where users can view and organize digital cards they've received from other app users, add them as contacts/friends, and see basic metadata like tags or when/where they met. Recipients who do not have the app should still be able to receive and use the information via share flows that generate a .vcf file or a web view: the QR code and share links should open a hosted web page showing the digital card, with options to download contact info, view social links, and download the attached resume. For in-app users sharing with each other, the experience should feel seamless, with a simple, fast flow to send and accept cards, add to their in-app contact list, and quickly access previously saved cards."
 
-## User Scenarios & Testing *(mandatory)*
+## Clarifications
 
-### User Story 1 - Create Profile and View My Card (Priority: P1) 🎯 MVP
+### Session 2025-11-21
 
-A tech professional downloads the app and needs to create their digital business card. They enter their professional information (name, title, email, phone, company, role, bio, tags) and add links to their social media profiles. They can then view their completed card on the "My Card" screen and edit any details as needed.
+- Q: Does the app require user authentication (account system with login), or is it purely local storage without any backend user accounts? → A: Required authentication using Clerk (note: Clerk is an implementation detail; requirement is mandatory user authentication with account system)
+- Q: Can users upload a profile picture/avatar for their business card, or will the system use initials/default avatars? → A: Allow profile picture upload with fallback to initials
+- Q: What backend solution will be used for storing user profiles, hosting web cards, and serving resume files? → A: Supabase (PostgreSQL + Storage + Auth integration) (note: Supabase is implementation detail; requirement is backend with relational database, file storage, and real-time API capabilities)
+- Q: Should QR code links expire after a certain time, or remain active permanently unless the user deletes their profile? → A: Permanent links until profile deletion
+- Q: How should users be notified when someone saves their card or when a saved contact updates their profile? → A: Push notifications with in-app fallback
 
-**Why this priority**: This is the foundational feature - without a profile, users cannot share anything. The "My Card" screen serves as the home base for managing one's digital identity. This delivers immediate value as users can see their professional card take shape.
+## User Scenarios & Testing _(mandatory)_
 
-**Independent Test**: A user can create a complete profile with all supported fields, view it on the My Card screen, edit any field, and see changes reflected immediately. No sharing or networking features required.
+### User Story 1 - Create Account, Profile and View My Card (Priority: P1) 🎯 MVP
+
+A tech professional downloads the app and needs to create their digital business card. They first sign up or log in to create an account, then enter their professional information (name, title, email, phone, company, role, bio, tags) and add links to their social media profiles. They can then view their completed card on the "My Card" screen and edit any details as needed.
+
+**Why this priority**: This is the foundational feature - without an account and profile, users cannot share anything. The "My Card" screen serves as the home base for managing one's digital identity. This delivers immediate value as users can see their professional card take shape.
+
+**Independent Test**: A user can sign up/log in, create a complete profile with all supported fields, view it on the My Card screen, edit any field, and see changes reflected immediately. No sharing or networking features required.
 
 **Acceptance Scenarios**:
 
-1. **Given** I am a new user opening the app for the first time, **When** I navigate to profile creation, **Then** I see a form with fields for name, title, email, phone, company, role, short bio, and customizable tags
-2. **Given** I am creating my profile, **When** I add social media links, **Then** I can select from supported platforms (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub, portfolio site) and add custom platform URLs
-3. **Given** I have filled out my profile information, **When** I save my profile, **Then** I am taken to the "My Card" screen showing a preview of my digital business card
-4. **Given** I am viewing my card on the "My Card" screen, **When** I select "Edit", **Then** I can modify any profile field including social links
-5. **Given** I am on the "My Card" screen, **When** I view my card, **Then** I see my information displayed in a clean, professional card layout with my name, title, company prominently featured
+1. **Given** I am a new user opening the app for the first time, **When** the app launches, **Then** I see authentication options to sign up or log in
+2. **Given** I complete authentication, **When** I navigate to profile creation, **Then** I see a form with fields for name, title, email, phone, company, role, short bio, customizable tags, and option to upload profile picture
+3. **Given** I am creating my profile, **When** I upload a profile picture, **Then** the system validates the file format and size, and displays a preview
+4. **Given** I am creating my profile without uploading a profile picture, **When** I view my card preview, **Then** I see my initials displayed as a fallback avatar
+5. **Given** I am creating my profile, **When** I add social media links, **Then** I can select from supported platforms (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub, portfolio site) and add custom platform URLs
+6. **Given** I have filled out my profile information, **When** I save my profile, **Then** I am taken to the "My Card" screen showing a preview of my digital business card
+7. **Given** I am viewing my card on the "My Card" screen, **When** I select "Edit", **Then** I can modify any profile field including profile picture and social links
+8. **Given** I am on the "My Card" screen, **When** I view my card, **Then** I see my information displayed in a clean, professional card layout with my profile picture (or initials), name, title, company prominently featured
 
 ---
 
@@ -93,9 +106,9 @@ Two users with the app installed want to exchange business cards instantly at a 
 
 1. **Given** I am at a networking event with another app user, **When** I go to Share screen and they open their in-app QR scanner, **Then** they can scan my code directly in the app (not via device camera)
 2. **Given** another user scans my in-app QR code, **When** the scan completes, **Then** they see my full card within the app and can save it to their Network tab with one tap
-3. **Given** I scan another user's in-app QR code, **When** I save their card, **Then** they receive a notification that I've added them and can add me back
+3. **Given** I scan another user's in-app QR code, **When** I save their card, **Then** they receive a push notification (or in-app notification if push disabled) that I've added them and can add me back
 4. **Given** two users are exchanging cards, **When** both accept the exchange, **Then** both cards appear in each other's Network tab automatically
-5. **Given** I have exchanged cards with another user, **When** they later update their profile, **Then** I see an option to refresh their saved card with updated information
+5. **Given** I have exchanged cards with another user, **When** they later update their profile, **Then** I receive a notification about the update and see an option to refresh their saved card with updated information
 
 ---
 
@@ -141,10 +154,13 @@ A new user downloading the app for the first time is guided through an onboardin
 - How does the system handle invalid email addresses or phone numbers?
 - What happens when a user tries to add a social link with an invalid URL format?
 - How does the app behave when trying to share via AirDrop but no nearby devices are found?
+- What happens when a user tries to upload an invalid image format for profile picture (e.g., GIF, BMP)?
+- What happens when a user tries to upload a profile picture larger than 5MB?
 - What happens when a user tries to upload a non-PDF file as a resume?
 - What happens when a user tries to upload a resume larger than 10MB?
-- How does the QR code link behave if the user deletes their profile after sharing?
+- How does the QR code link behave if the user deletes their profile after sharing? (Answer: Link becomes invalid and shows "This card is no longer available" message)
 - What happens when scanning a QR code that isn't a valid BizzyCard QR code?
+- What happens if someone saved a card and the original user later deletes their profile?
 - How does the web view render on very old browsers or devices with JavaScript disabled?
 - What happens when a user has 500+ saved contacts in their Network tab (performance)?
 - How does the app handle network failures when loading someone's web card?
@@ -154,86 +170,139 @@ A new user downloading the app for the first time is guided through an onboardin
 - What happens when a user receives a card from someone who later updates their information?
 - How does the app behave when trying to export a .vcf file but storage permissions are denied?
 - What happens when a user's uploaded resume file becomes corrupted or inaccessible?
+- What happens when a push notification fails to deliver?
+- How does the system handle notification preferences when a user has multiple devices?
+- What happens if a user receives too many notifications in a short time (notification spam)?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
+**Authentication:**
+
+- **FR-001**: System MUST require user authentication before accessing any app features
+- **FR-002**: System MUST support user account creation (sign up)
+- **FR-003**: System MUST support user login for returning users
+- **FR-004**: System MUST securely store authentication tokens and manage user sessions
+- **FR-005**: System MUST provide logout functionality
+- **FR-006**: System MUST sync user profile data across devices when logged in with the same account
+
+**Backend & Data Storage:**
+
+- **FR-007**: System MUST store user profiles in a relational database with support for complex queries
+- **FR-008**: System MUST provide API endpoints for all profile operations (create, read, update, delete)
+- **FR-009**: System MUST authenticate all backend requests using secure token-based authentication
+- **FR-010**: System MUST provide secure file storage for profile pictures and resumes
+- **FR-011**: System MUST generate and serve unique URLs for web-viewable cards
+- **FR-012**: System MUST handle file uploads with validation for size and format
+- **FR-013**: System MUST optimize and compress uploaded images for efficient delivery
+- **FR-014**: System MUST support real-time updates when profile data changes
+- **FR-015**: System MUST provide database row-level security to ensure users can only access their own data
+
 **Profile Management:**
-- **FR-001**: System MUST allow users to create a profile with required fields: name, email, phone number
-- **FR-002**: System MUST allow users to add optional profile fields: title, company, role, short bio, customizable tags
-- **FR-003**: System MUST validate email addresses using standard email format validation
-- **FR-004**: System MUST validate phone numbers using international phone number format standards
-- **FR-005**: System MUST allow users to add social media links for supported platforms: Bluesky, LinkedIn, X (Twitter), Facebook, Instagram, GitHub, and custom portfolio sites
-- **FR-006**: System MUST validate social media URLs to ensure proper formatting
-- **FR-007**: System MUST allow users to edit any profile field after initial creation
-- **FR-008**: System MUST persist user profile data locally on the device
-- **FR-009**: System MUST allow users to upload a PDF resume file (max 10MB)
-- **FR-010**: System MUST allow users to preview their uploaded resume
-- **FR-011**: System MUST allow users to remove their uploaded resume
+
+- **FR-016**: System MUST allow authenticated users to create a profile with required fields: name, email, phone number
+- **FR-017**: System MUST allow users to add optional profile fields: title, company, role, short bio, customizable tags
+- **FR-018**: System MUST allow users to upload an optional profile picture/avatar (max 5MB, formats: JPG, PNG, WebP)
+- **FR-019**: System MUST display user initials as fallback when no profile picture is uploaded
+- **FR-020**: System MUST allow users to update or remove their profile picture
+- **FR-021**: System MUST validate email addresses using standard email format validation
+- **FR-022**: System MUST validate phone numbers using international phone number format standards
+- **FR-023**: System MUST allow users to add social media links for supported platforms: Bluesky, LinkedIn, X (Twitter), Facebook, Instagram, GitHub, and custom portfolio sites
+- **FR-024**: System MUST validate social media URLs to ensure proper formatting
+- **FR-025**: System MUST allow users to edit any profile field after initial creation
+- **FR-026**: System MUST persist user profile data in backend with local caching for offline access
+- **FR-027**: System MUST allow users to upload a PDF resume file (max 10MB)
+- **FR-028**: System MUST allow users to preview their uploaded resume
+- **FR-029**: System MUST allow users to remove their uploaded resume
 
 **My Card Screen:**
-- **FR-012**: System MUST display a "My Card" screen showing a preview of the user's digital business card
-- **FR-013**: System MUST provide clear access to edit profile details, social links, and resume from the My Card screen
-- **FR-014**: System MUST display all profile fields in a professional card layout on the My Card screen
-- **FR-015**: System MUST show an indicator when a resume is attached to the profile
+
+- **FR-030**: System MUST display a "My Card" screen showing a preview of the user's digital business card
+- **FR-031**: System MUST display profile picture or initials fallback on the My Card screen
+- **FR-032**: System MUST provide clear access to edit profile details, profile picture, social links, and resume from the My Card screen
+- **FR-033**: System MUST display all profile fields in a professional card layout on the My Card screen
+- **FR-034**: System MUST show an indicator when a resume is attached to the profile
 
 **Share Screen & QR Code:**
-- **FR-016**: System MUST provide a dedicated "Share" screen prominently displaying a QR code
-- **FR-017**: System MUST generate a unique QR code for each user's profile that links to a web-viewable card
-- **FR-018**: System MUST regenerate the QR code when profile information changes
-- **FR-019**: System MUST provide quick action buttons for multiple sharing methods: AirDrop, Email, SMS, Copy Link, Send .vcf
+
+- **FR-035**: System MUST provide a dedicated "Share" screen prominently displaying a QR code
+- **FR-036**: System MUST generate a unique QR code for each user's profile that links to a web-viewable card
+- **FR-037**: System MUST regenerate the QR code when profile information changes
+- **FR-038**: System MUST provide quick action buttons for multiple sharing methods: AirDrop, Email, SMS, Copy Link, Send .vcf
 
 **Sharing Methods:**
-- **FR-020**: System MUST support sharing via AirDrop for iOS devices
-- **FR-021**: System MUST support sharing via email with a pre-composed message including the card link
-- **FR-022**: System MUST support sharing via SMS with the card link
-- **FR-023**: System MUST allow users to copy their shareable card link to clipboard
-- **FR-024**: System MUST generate downloadable .vcf (vCard) files compatible with standard contact apps
-- **FR-025**: System MUST support sharing .vcf files via native mobile sharing options
+
+- **FR-039**: System MUST support sharing via AirDrop for iOS devices
+- **FR-040**: System MUST support sharing via email with a pre-composed message including the card link
+- **FR-041**: System MUST support sharing via SMS with the card link
+- **FR-042**: System MUST allow users to copy their shareable card link to clipboard
+- **FR-043**: System MUST generate downloadable .vcf (vCard) files compatible with standard contact apps
+- **FR-044**: System MUST support sharing .vcf files via native mobile sharing options
 
 **Web View for Recipients:**
-- **FR-026**: System MUST provide a hosted web page that displays business card information without requiring app installation
-- **FR-027**: Web page MUST be mobile-responsive and render correctly on all device sizes
-- **FR-028**: Web page MUST display all shared profile fields: name, title, company, role, phone, email, bio, tags, and social media links
-- **FR-029**: Web page MUST provide a "Download Contact" button that generates a .vcf file
-- **FR-030**: Web page MUST provide clickable links to all social media profiles
-- **FR-031**: Web page MUST provide a "Download Resume" button when a resume is attached and sharing is enabled
-- **FR-032**: System MUST generate unique, shareable URLs for each user's web-viewable card
+
+- **FR-045**: System MUST provide a hosted web page that displays business card information without requiring app installation
+- **FR-046**: Web page MUST be mobile-responsive and render correctly on all device sizes
+- **FR-047**: Web page MUST display all shared profile fields including profile picture (or initials): name, title, company, role, phone, email, bio, tags, and social media links
+- **FR-048**: Web page MUST provide a "Download Contact" button that generates a .vcf file
+- **FR-049**: Web page MUST provide clickable links to all social media profiles
+- **FR-050**: Web page MUST provide a "Download Resume" button when a resume is attached and sharing is enabled
+- **FR-051**: System MUST generate unique, shareable URLs for each user's web-viewable card
+- **FR-052**: Shareable card URLs MUST remain active and accessible permanently until the user deletes their profile or account
+- **FR-053**: System MUST display an appropriate message when accessing a deleted profile's URL (e.g., "This card is no longer available")
 
 **Network/Contacts Tab:**
-- **FR-033**: System MUST provide a "Network" or "Contacts" tab where users can view received business cards
-- **FR-034**: System MUST display saved cards in an organized list with names, companies, and profile pictures (if available)
-- **FR-035**: System MUST provide search functionality for saved contacts by name, company, role, or tags
-- **FR-036**: System MUST allow users to add custom tags to saved cards (e.g., "Conference 2025", "Client")
-- **FR-037**: System MUST allow users to add notes to saved cards (e.g., where/when they met)
-- **FR-038**: System MUST allow users to export saved cards to device contacts
-- **FR-039**: System MUST allow users to filter saved cards by custom tags
-- **FR-040**: System MUST display metadata for each card (date received, tags, notes)
+
+- **FR-054**: System MUST provide a "Network" or "Contacts" tab where users can view received business cards
+- **FR-055**: System MUST display saved cards in an organized list with names, companies, and profile pictures (or initials fallback)
+- **FR-056**: System MUST provide search functionality for saved contacts by name, company, role, or tags
+- **FR-057**: System MUST allow users to add custom tags to saved cards (e.g., "Conference 2025", "Client")
+- **FR-058**: System MUST allow users to add notes to saved cards (e.g., where/when they met)
+- **FR-059**: System MUST allow users to export saved cards to device contacts
+- **FR-060**: System MUST allow users to filter saved cards by custom tags
+- **FR-061**: System MUST display metadata for each card (date received, tags, notes)
 
 **In-App User Exchange:**
-- **FR-041**: System MUST provide an in-app QR code scanner for seamless card exchange between users
-- **FR-042**: System MUST allow users to scan another user's QR code within the app (not via device camera)
-- **FR-043**: System MUST display scanned user's full card within the app before saving
-- **FR-044**: System MUST allow users to save received cards to their Network tab with one tap
-- **FR-045**: System MUST notify users when someone scans and saves their card
-- **FR-046**: System MUST support automatic mutual card exchange when both users accept
-- **FR-047**: System MUST allow users to refresh saved cards when the original owner updates their profile
+
+- **FR-062**: System MUST provide an in-app QR code scanner for seamless card exchange between users
+- **FR-063**: System MUST allow users to scan another user's QR code within the app (not via device camera)
+- **FR-064**: System MUST display scanned user's full card within the app before saving
+- **FR-065**: System MUST allow users to save received cards to their Network tab with one tap
+- **FR-066**: System MUST notify users when someone scans and saves their card (via push notification if enabled, in-app notification otherwise)
+- **FR-067**: System MUST support automatic mutual card exchange when both users accept
+- **FR-068**: System MUST notify users when a saved contact updates their profile (via push notification if enabled, in-app notification otherwise)
+
+**Notifications:**
+
+- **FR-069**: System MUST support push notifications for iOS and Android platforms
+- **FR-070**: System MUST request push notification permissions from users
+- **FR-071**: System MUST provide in-app notifications as fallback when push notifications are disabled or unavailable
+- **FR-072**: System MUST send push notifications when someone saves the user's card
+- **FR-073**: System MUST send push notifications when a saved contact updates their profile information
+- **FR-074**: System MUST display in-app notification badge or indicator for unread notifications
+- **FR-075**: System MUST allow users to view notification history within the app
+- **FR-076**: System MUST allow users to enable/disable notification types in app settings
 
 **Onboarding:**
-- **FR-048**: System MUST provide an onboarding flow for first-time users explaining key features
-- **FR-049**: System MUST allow users to skip onboarding and proceed directly to profile creation
-- **FR-050**: System MUST show onboarding only once per user (not on subsequent app launches)
+
+- **FR-077**: System MUST provide an onboarding flow for first-time users explaining key features
+- **FR-078**: System MUST allow users to skip onboarding and proceed directly to profile creation
+- **FR-079**: System MUST show onboarding only once per user (not on subsequent app launches)
 
 **General:**
-- **FR-051**: System MUST provide visual feedback for all user actions (loading states, success confirmations, error messages)
-- **FR-052**: System MUST handle offline scenarios gracefully (show appropriate messages when network required)
-- **FR-053**: System MUST support both iOS and Android platforms
-- **FR-054**: System MUST allow users to delete their profile and all associated data
+
+- **FR-080**: System MUST provide visual feedback for all user actions (loading states, success confirmations, error messages)
+- **FR-081**: System MUST handle offline scenarios gracefully (show appropriate messages when network required)
+- **FR-082**: System MUST support both iOS and Android platforms
+- **FR-083**: System MUST allow users to delete their account, profile, and all associated data
+- **FR-084**: System MUST invalidate all shareable URLs when a user deletes their profile or account
 
 ### Key Entities
 
-- **User Profile**: Represents a tech professional's digital business card. Key attributes include unique identifier, required fields (name, email, phone), optional fields (title, company, role, bio, tags), social media links array, resume file reference, privacy settings, creation/update timestamps.
+- **User Account**: Represents an authenticated user of the app. Key attributes include unique account identifier, authentication credentials (managed by auth provider), email, account creation timestamp, last login timestamp.
+
+- **User Profile**: Represents a tech professional's digital business card. Key attributes include unique identifier, reference to User Account, required fields (name, email, phone), optional fields (title, company, role, bio, tags, profile picture), social media links array, resume file reference, privacy settings, creation/update timestamps.
 
 - **Social Link**: Represents a social media or web presence link. Attributes include platform type (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub, Portfolio, Other), URL, display order, visibility status.
 
@@ -245,76 +314,103 @@ A new user downloading the app for the first time is guided through an onboardin
 
 - **Card Exchange Event**: Represents a mutual exchange between two app users. Attributes include both User Profile references, exchange timestamp, acceptance status, exchange method (in-app scan).
 
+- **Notification**: Represents a notification sent to a user. Attributes include unique identifier, recipient User Account reference, notification type (card_saved, profile_updated), related User Profile reference (who triggered the notification), message content, read status, push notification sent status, creation timestamp.
+
 - **Onboarding State**: Represents whether a user has completed onboarding. Attributes include user reference, onboarding completed flag, completion timestamp.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
 **User Onboarding & Profile Creation:**
+
 - **SC-001**: New users can create a complete profile with all required fields in under 3 minutes
 - **SC-002**: 90% of users who start profile creation complete it and save their first card
 - **SC-003**: Users can add and edit social media links in under 30 seconds per link
+- **SC-004**: Profile picture uploads complete in under 10 seconds for files up to 5MB
 
 **Sharing Effectiveness:**
-- **SC-004**: Users can generate and display their QR code for sharing in under 2 seconds from the My Card screen
-- **SC-005**: 95% of QR code scans successfully direct recipients to the web card page within 3 seconds
-- **SC-006**: Recipients without the app can view a shared business card and download contact info in under 30 seconds
-- **SC-007**: 85% of users successfully share their card using at least one method within their first session
-- **SC-008**: Generated .vcf files import successfully into iOS Contacts, Android Contacts, and Outlook with all supported fields
+
+- **SC-005**: Users can generate and display their QR code for sharing in under 2 seconds from the My Card screen
+- **SC-006**: 95% of QR code scans successfully direct recipients to the web card page within 3 seconds
+- **SC-007**: Recipients without the app can view a shared business card and download contact info in under 30 seconds
+- **SC-008**: 85% of users successfully share their card using at least one method within their first session
+- **SC-009**: Generated .vcf files import successfully into iOS Contacts, Android Contacts, and Outlook with all supported fields
 
 **Web View Performance:**
-- **SC-009**: Web card pages load and render all content within 2 seconds on standard mobile network speeds (4G)
-- **SC-010**: Web card pages pass WCAG AA accessibility standards for mobile and desktop browsers
-- **SC-011**: Web card pages render correctly on 95% of modern browsers (Chrome, Safari, Firefox, Edge) released in the last 3 years
+
+- **SC-010**: Web card pages load and render all content (including profile pictures) within 2 seconds on standard mobile network speeds (4G)
+- **SC-011**: Web card pages pass WCAG AA accessibility standards for mobile and desktop browsers
+- **SC-012**: Web card pages render correctly on 95% of modern browsers (Chrome, Safari, Firefox, Edge) released in the last 3 years
 
 **Contact Management:**
-- **SC-012**: Users can find a specific contact from a list of 100+ saved cards in under 5 seconds using search
-- **SC-013**: Users can add tags and notes to received cards in under 30 seconds
-- **SC-014**: The Network tab displays and scrolls smoothly through 500+ saved contacts with no performance degradation
+
+- **SC-013**: Users can find a specific contact from a list of 100+ saved cards in under 5 seconds using search
+- **SC-014**: Users can add tags and notes to received cards in under 30 seconds
+- **SC-015**: The Network tab displays and scrolls smoothly through 500+ saved contacts with no performance degradation
 
 **In-App Exchange:**
-- **SC-015**: In-app card exchange between two users completes in under 10 seconds from scan to both cards saved
-- **SC-016**: 90% of in-app QR scans successfully capture card information on first attempt
+
+- **SC-016**: In-app card exchange between two users completes in under 10 seconds from scan to both cards saved
+- **SC-017**: 90% of in-app QR scans successfully capture card information on first attempt
+
+**Notifications:**
+
+- **SC-018**: Push notifications are delivered within 5 seconds of triggering event (card saved, profile updated)
+- **SC-019**: 85% of users who enable push notifications successfully receive and view at least one notification
+- **SC-020**: In-app notification fallback displays correctly when push notifications are disabled
+- **SC-021**: Notification history displays all notifications in chronological order with correct read/unread status
 
 **Performance & Reliability:**
-- **SC-017**: The app maintains 60fps performance during navigation between screens and scrolling on mid-range devices (3-year-old iPhone/Android)
-- **SC-018**: App launch time is under 3 seconds (cold start)
-- **SC-019**: Resume uploads complete in under 15 seconds for files up to 10MB on standard mobile networks
-- **SC-020**: 99% of sharing actions (QR, email, SMS, AirDrop, .vcf) complete successfully without errors
+
+- **SC-022**: The app maintains 60fps performance during navigation between screens and scrolling on mid-range devices (3-year-old iPhone/Android)
+- **SC-023**: App launch time is under 3 seconds (cold start)
+- **SC-024**: Profile picture uploads complete in under 10 seconds for files up to 5MB
+- **SC-025**: Resume uploads complete in under 15 seconds for files up to 10MB on standard mobile networks
+- **SC-026**: Backend API responses return within 200ms for 95% of read operations
+- **SC-027**: Backend API responses return within 500ms for 95% of write operations
+- **SC-028**: 99% of sharing actions (QR, email, SMS, AirDrop, .vcf) complete successfully without errors
+- **SC-029**: System handles profile data sync across devices within 2 seconds of changes
 
 **User Satisfaction:**
-- **SC-021**: 80% of users rate the app as "easy to use" for creating and sharing their business card (user survey)
-- **SC-022**: 85% of users who receive a card via QR code successfully download contact info or view social links
-- **SC-023**: App maintains an average rating of 4.5+ stars on App Store and Play Store
-- **SC-024**: User retention rate of 70%+ after 30 days for users who create a profile
+
+- **SC-030**: 80% of users rate the app as "easy to use" for creating and sharing their business card (user survey)
+- **SC-031**: 85% of users who receive a card via QR code successfully download contact info or view social links
+- **SC-032**: App maintains an average rating of 4.5+ stars on App Store and Play Store
+- **SC-033**: User retention rate of 70%+ after 30 days for users who create a profile
 
 **Bundle & Technical:**
-- **SC-025**: App bundle size remains under 50MB for initial download on both iOS and Android
-- **SC-026**: Zero critical security vulnerabilities in uploaded resume handling or data storage
+
+- **SC-034**: App bundle size remains under 50MB for initial download on both iOS and Android
+- **SC-035**: Zero critical security vulnerabilities in uploaded file handling, data storage, or API endpoints
+- **SC-036**: Database queries maintain sub-100ms response times for 99% of profile lookups
 
 ---
 
 ## Assumptions
 
-1. **Hosting Infrastructure**: Assumes web-viewable cards will be hosted on a reliable service that handles URL generation, storage, and content delivery
+1. **Backend Infrastructure**: Backend will provide relational database (PostgreSQL), file storage, real-time API, and row-level security. Web-viewable cards will be hosted with URL generation and content delivery capabilities
 2. **QR Code Format**: Assumes standard QR code format that is compatible with all modern camera apps (iOS Camera, Android Camera, third-party readers)
 3. **Platform Support**: Assumes iOS 15+ and Android 10+ as minimum supported versions
-4. **Data Storage**: Assumes all user data will be stored locally on device with optional cloud backup for cross-device sync (cloud sync not in scope for this spec)
-5. **Resume Format**: Assumes PDF is the only accepted resume format (most universal and prevents malware via executable files)
-6. **File Size Limits**: Assumes 10MB max resume size is sufficient for most professional resumes (typically 1-3MB)
-7. **Social Platform Support**: Assumes the listed platforms (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub) are the most relevant for tech professionals; system allows custom URLs for other platforms
-8. **Network Requirements**: Assumes sharing methods (QR web view, email, SMS) require network connectivity; offline fallback is viewing saved local cards only
-9. **vCard Compatibility**: Assumes standard vCard 3.0 or 4.0 format for .vcf files ensures compatibility with major contacts applications
-10. **Privacy**: Assumes users control what information is shared; by default all profile fields are included in shares (privacy controls can be added in future enhancement)
-11. **AirDrop Availability**: Assumes AirDrop is iOS-only; Android users will use alternative sharing methods
-12. **In-App Exchange**: Assumes both users must have the app installed and be using it actively for seamless in-app exchange feature
+4. **Data Storage**: User data will be stored in backend database with authentication, enabling cross-device sync. Local caching will be used for offline access to user's own profile and saved contacts
+5. **File Storage**: Profile pictures and resumes will be stored in backend file storage with automatic URL generation, support for public/private access control, and CDN delivery for performance
+6. **Resume Format**: Assumes PDF is the only accepted resume format (most universal and prevents malware via executable files)
+7. **File Size Limits**: Assumes 10MB max resume size and 5MB max profile picture size are sufficient for most professional use cases
+8. **Social Platform Support**: Assumes the listed platforms (Bluesky, LinkedIn, X, Facebook, Instagram, GitHub) are the most relevant for tech professionals; system allows custom URLs for other platforms
+9. **Network Requirements**: Assumes sharing methods (QR web view, email, SMS) require network connectivity; offline fallback is viewing saved local cards only
+10. **vCard Compatibility**: Assumes standard vCard 3.0 or 4.0 format for .vcf files ensures compatibility with major contacts applications
+11. **Privacy**: Assumes users control what information is shared; by default all profile fields are included in shares (privacy controls can be added in future enhancement)
+12. **AirDrop Availability**: Assumes AirDrop is iOS-only; Android users will use alternative sharing methods
+13. **In-App Exchange**: Assumes both users must have the app installed and be using it actively for seamless in-app exchange feature
+14. **Link Persistence**: Shareable card URLs remain active permanently until the user explicitly deletes their profile or account; no automatic expiration
+15. **Notifications**: Push notifications will be implemented using platform-specific services (APNs for iOS, FCM for Android). In-app notifications provide fallback for users who deny push permissions or have connectivity issues
 
 ---
 
 ## Next Steps
 
 This specification is ready for:
+
 1. **Quality Validation** - Automated checklist verification
 2. **Clarification** (`/speckit.clarify`) - Resolve any unclear requirements
 3. **Technical Planning** (`/speckit.plan`) - Architect the implementation approach
