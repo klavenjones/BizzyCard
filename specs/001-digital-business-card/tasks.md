@@ -121,22 +121,22 @@ This is a React Native mobile app with Expo:
 
 #### Authentication Screens
 
-- [ ] T041 [P] [US1] Create sign-in screen in `app/(auth)/sign-in.tsx` (Clerk SignIn component)
-- [ ] T042 [P] [US1] Create sign-up screen in `app/(auth)/sign-up.tsx` (Clerk SignUp component)
-- [ ] T043 [US1] Configure auth redirect logic in `app/index.tsx` (authenticated → tabs, unauthenticated → auth)
+- [x] T041 [P] [US1] Create sign-in screen in `app/(auth)/sign-in.tsx` (Clerk SignIn component)
+- [x] T042 [P] [US1] Create sign-up screen in `app/(auth)/sign-up.tsx` (Clerk SignUp component)
+- [x] T043 [US1] Configure auth redirect logic in `app/index.tsx` (authenticated → tabs, unauthenticated → auth)
 
 #### Profile Data Layer
 
-- [ ] T044 [P] [US1] Create profile API service in `lib/supabase/profiles.ts` (createProfile, updateProfile, getProfile)
-- [ ] T045 [P] [US1] Create social links API service in `lib/supabase/social-links.ts` (CRUD operations)
-- [ ] T046 [US1] Create profile hooks in `lib/hooks/use-profile.ts` (useProfile, useUpdateProfile with React Query, uses last-write-wins via Supabase updated_at timestamp)
-- [ ] T047 [P] [US1] Create social links hooks in `lib/hooks/use-social-links.ts` (useSocialLinks, useUpdateSocialLinks)
+- [x] T044 [P] [US1] Create profile API service in `lib/supabase/profiles.ts` (createProfile, updateProfile, getProfile)
+- [x] T045 [P] [US1] Create social links API service in `lib/supabase/social-links.ts` (CRUD operations)
+- [x] T046 [US1] Create profile hooks in `lib/hooks/use-profile.ts` (useProfile, useUpdateProfile with React Query, uses last-write-wins via Supabase updated_at timestamp)
+- [x] T047 [P] [US1] Create social links hooks in `lib/hooks/use-social-links.ts` (useSocialLinks, useUpdateSocialLinks)
 
 #### Profile Picture Upload
 
-- [ ] T048 [P] [US1] Create image picker utility in `lib/utils/image-picker.ts` (expo-image-picker wrapper)
-- [ ] T049 [P] [US1] Create image upload service in `lib/supabase/storage.ts` (uploadProfilePicture, deleteProfilePicture)
-- [ ] T050 [US1] Create profile picture component in `components/profile/profile-picture.tsx` (displays picture or initials)
+- [x] T048 [P] [US1] Create image picker utility in `lib/utils/image-picker.ts` (expo-image-picker wrapper)
+- [x] T049 [P] [US1] Create image upload service in `lib/supabase/storage.ts` (uploadProfilePicture, deleteProfilePicture)
+- [x] T050 [US1] Create profile picture component in `components/profile/profile-picture.tsx` (displays picture or initials)
 
 #### Profile Form Components
 
