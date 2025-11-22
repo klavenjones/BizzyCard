@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "BizzyCard",
+    "scheme": "bizzycard",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -34,6 +34,11 @@
     "plugins": [
       "expo-router"
     ],
+    "extra": {
+      "eas": {
+        "projectId": "your-project-id"
+      }
+    },
     "experiments": {
       "typedRoutes": true
     }

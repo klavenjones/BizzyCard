@@ -53,49 +53,49 @@ This is a React Native mobile app with Expo:
 
 ### Database & Backend Foundation
 
-- [ ] T011 Create initial database migration in `supabase/migrations/001_initial_schema.sql` (all tables from data-model.md)
-- [ ] T012 Run database migration with `supabase db push`
-- [ ] T013 Create Supabase storage buckets: `profile-pictures` (public) and `resumes` (public)
-- [ ] T014 Configure RLS policies for all tables in migration file
-- [ ] T015 Create storage RLS policies for upload/read access
+- [x] T011 Create initial database migration in `supabase/migrations/001_initial_schema.sql` (all tables from data-model.md)
+- [ ] T012 Run database migration with `supabase db push` (requires Supabase project setup - see PHASE2_STATUS.md)
+- [ ] T013 Create Supabase storage buckets: `profile-pictures` (public) and `resumes` (public) (requires Supabase project - see PHASE2_STATUS.md)
+- [x] T014 Configure RLS policies for all tables in migration file
+- [ ] T015 Create storage RLS policies for upload/read access (requires Supabase project - see PHASE2_STATUS.md)
 
 ### Supabase Client & Types
 
-- [ ] T016 Initialize Supabase client in `lib/supabase/client.ts`
-- [ ] T017 Generate TypeScript types from database schema: `supabase gen types typescript > lib/types/database.ts`
-- [ ] T018 [P] Create domain types in `lib/types/profile.ts` (Profile, SocialLink domain models)
-- [ ] T019 [P] Create domain types in `lib/types/contact.ts` (SavedContact domain models)
+- [x] T016 Initialize Supabase client in `lib/supabase/client.ts`
+- [ ] T017 Generate TypeScript types from database schema: `supabase gen types typescript > lib/types/database.ts` (requires T012 completion - see PHASE2_STATUS.md)
+- [x] T018 [P] Create domain types in `lib/types/profile.ts` (Profile, SocialLink domain models)
+- [x] T019 [P] Create domain types in `lib/types/contact.ts` (SavedContact domain models)
 
 ### Clerk Authentication Foundation
 
-- [ ] T020 Wrap app in ClerkProvider in `app/_layout.tsx`
-- [ ] T021 Configure Clerk token cache with Expo SecureStore
-- [ ] T022 Create auth hooks in `lib/clerk/hooks.ts` (useUser, useAuth wrappers)
-- [ ] T023 [P] Create auth guards/protected routes in `lib/clerk/guards.tsx`
+- [x] T020 Wrap app in ClerkProvider in `app/_layout.tsx`
+- [x] T021 Configure Clerk token cache with Expo SecureStore
+- [x] T022 Create auth hooks in `lib/clerk/hooks.ts` (useUser, useAuth wrappers)
+- [x] T023 [P] Create auth guards/protected routes in `lib/clerk/guards.tsx`
 
 ### React Query & State Management Foundation
 
-- [ ] T024 Setup React Query provider in `app/_layout.tsx` with persistence config
-- [ ] T025 Create React Query client configuration in `lib/query-client.ts`
-- [ ] T026 [P] Setup AsyncStorage persistence for React Query cache
+- [x] T024 Setup React Query provider in `app/_layout.tsx` with persistence config
+- [x] T025 Create React Query client configuration in `lib/query-client.ts`
+- [x] T026 [P] Setup AsyncStorage persistence for React Query cache
 
 ### Validation & Forms Foundation
 
-- [ ] T027 Create Zod validation schemas in `lib/validation/schemas.ts` (profileSchema, socialLinkSchema)
-- [ ] T028 [P] Create validation utilities in `lib/utils/validation.ts` (email, phone, URL validators, use libphonenumber-js for international format validation)
+- [x] T027 Create Zod validation schemas in `lib/validation/schemas.ts` (profileSchema, socialLinkSchema)
+- [x] T028 [P] Create validation utilities in `lib/utils/validation.ts` (email, phone, URL validators, use libphonenumber-js for international format validation)
 
 ### UI Foundation
 
-- [ ] T029 Configure global theme in `lib/theme.ts` (colors, spacing, typography)
-- [ ] T030 [P] Create error boundary component in `components/error-boundary.tsx`
-- [ ] T031 [P] Create loading indicator component in `components/ui/loading.tsx`
-- [ ] T032 [P] Create toast/notification component in `components/ui/toast.tsx`
+- [x] T029 Configure global theme in `lib/theme.ts` (colors, spacing, typography)
+- [x] T030 [P] Create error boundary component in `components/error-boundary.tsx`
+- [x] T031 [P] Create loading indicator component in `components/ui/loading.tsx`
+- [x] T032 [P] Create toast/notification component in `components/ui/toast.tsx`
 
 ### Navigation Foundation
 
-- [ ] T033 Configure root layout with providers in `app/_layout.tsx` (Clerk, Query, Theme)
-- [ ] T034 Create auth layout in `app/(auth)/_layout.tsx`
-- [ ] T035 [P] Configure deep linking in `app.json` (scheme: bizzycard)
+- [x] T033 Configure root layout with providers in `app/_layout.tsx` (Clerk, Query, Theme)
+- [x] T034 Create auth layout in `app/(auth)/_layout.tsx`
+- [x] T035 [P] Configure deep linking in `app.json` (scheme: bizzycard)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
