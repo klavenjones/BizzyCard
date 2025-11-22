@@ -8,6 +8,7 @@ import { MoonStarIcon, XIcon, SunIcon } from 'lucide-react-native';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Image, type ImageStyle, View } from 'react-native';
+import { Authenticated, Unauthenticated, AuthLoading, useQuery } from 'convex/react';
 
 const LOGO = {
   light: require('@/assets/images/react-native-reusables-light.png'),

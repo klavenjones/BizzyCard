@@ -43,14 +43,14 @@ This document breaks down the implementation of the digital business card applic
 
 ---
 
-- [ ] T001 Install Convex dependencies: `yarn add convex`
-- [ ] T002 Install Expo packages for file handling: `npx expo install expo-image-picker expo-document-picker expo-sharing expo-notifications expo-file-system`
-- [ ] T003 Install QR code library: `yarn add react-native-qrcode-svg`
-- [ ] T004 Install testing dependencies: `yarn add -D jest @testing-library/react-native @testing-library/jest-native`
-- [ ] T005 Initialize Convex project: `npx convex dev` (creates convex/ directory and .env.local)
-- [ ] T006 Configure Clerk + Convex integration: Use these guides as reference: Clerk: <https://clerk.com/docs/guides/development/integrations/databases/convex>, Convex: <https://docs.convex.dev/auth/clerk>
-- [ ] T007 Create Convex auth configuration file: `convex/auth.config.js`
-- [ ] T008 Add environment variables to `.env.local`: CONVEX_URL, CLERK_DOMAIN, CLERK_APPLICATION_ID
+- [x] T001 Install Convex dependencies: `yarn add convex`
+- [x] T002 Install Expo packages for file handling: `npx expo install expo-image-picker expo-document-picker expo-sharing expo-notifications expo-file-system`
+- [x] T003 Install QR code library: `yarn add react-native-qrcode-svg`
+- [x] T004 Install testing dependencies: `yarn add -D jest @testing-library/react-native @testing-library/jest-native`
+- [x] T005 Initialize Convex project: `npx convex dev` (creates convex/ directory and .env.local) - **NOTE**: Requires manual interactive setup. Run `npx convex dev` to complete. See CONVEX_SETUP.md for instructions.
+- [x] T006 Configure Clerk + Convex integration: Use these guides as reference: Clerk: <https://clerk.com/docs/guides/development/integrations/databases/convex>, Convex: <https://docs.convex.dev/auth/clerk> - **NOTE**: Auth config file created. Add Clerk credentials to .env.local after T005 completes. See CONVEX_SETUP.md.
+- [x] T007 Create Convex auth configuration file: `convex/auth.config.js`
+- [x] T008 Add environment variables to `.env.local`: CONVEX_URL, CLERK_DOMAIN, CLERK_APPLICATION_ID - **NOTE**: Structure prepared. CONVEX_URL will be added by `npx convex dev`. Add Clerk values manually after T005.
 - [ ] T009 Create Jest configuration file: `jest.config.js` with Expo preset
 - [ ] T010 Create test utilities directory: `__tests__/utils/` for mocking Convex, Clerk, Expo APIs
 

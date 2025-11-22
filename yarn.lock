@@ -852,7 +852,7 @@
 
 "@clerk/clerk-react@^5.56.2":
   version "5.56.2"
-  resolved "https://registry.npmjs.org/@clerk/clerk-react/-/clerk-react-5.56.2.tgz"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.56.2.tgz#695ba784e1666dc3c119728711c28f93c9ac1fb6"
   integrity sha512-ya7hJxibzS8qg0jTRbXRgg1YKvm1TDATWBGswiydkc23XQOTNqjP6nKUNujudQ18Rg1NsWzEyiaKPNmLOsAAcQ==
   dependencies:
     "@clerk/shared" "^3.35.2"
