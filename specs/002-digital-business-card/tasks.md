@@ -51,8 +51,8 @@ This document breaks down the implementation of the digital business card applic
 - [x] T006 Configure Clerk + Convex integration: Use these guides as reference: Clerk: <https://clerk.com/docs/guides/development/integrations/databases/convex>, Convex: <https://docs.convex.dev/auth/clerk> - **NOTE**: Auth config file created. Add Clerk credentials to .env.local after T005 completes. See CONVEX_SETUP.md.
 - [x] T007 Create Convex auth configuration file: `convex/auth.config.js`
 - [x] T008 Add environment variables to `.env.local`: CONVEX_URL, CLERK_DOMAIN, CLERK_APPLICATION_ID - **NOTE**: Structure prepared. CONVEX_URL will be added by `npx convex dev`. Add Clerk values manually after T005.
-- [ ] T009 Create Jest configuration file: `jest.config.js` with Expo preset
-- [ ] T010 Create test utilities directory: `__tests__/utils/` for mocking Convex, Clerk, Expo APIs
+- [x] T009 Create Jest configuration file: `jest.config.js` with Expo preset
+- [x] T010 Create test utilities directory: `__tests__/utils/` for mocking Convex, Clerk, Expo APIs
 
 ## Phase 2: Foundational Infrastructure
 
@@ -62,14 +62,14 @@ This document breaks down the implementation of the digital business card applic
 
 ---
 
-- [ ] T011 [P] Create Convex schema file: `convex/schema.ts` with all entity definitions (users, cards, socialLinks, contacts, meetingMetadata)
-- [ ] T012 [P] Create Convex users functions: `convex/users.ts` with syncFromClerk mutation and getCurrentUser query
-- [ ] T013 [P] Create Convex client setup: `lib/convex-client.ts` with ConvexReactClient configuration
-- [ ] T014 [P] Update root layout to wrap app with ConvexProvider: `app/_layout.tsx`
-- [ ] T015 [P] Create validation utilities: `lib/validation.ts` with email, phone, URL validation functions
-- [ ] T016 [P] Create vCard generation utilities: `lib/vcf.ts` with vCard file generation functions
-- [ ] T017 [P] Create QR code service: `services/qr-code.ts` with QR code generation logic
-- [ ] T018 [P] Create file upload service: `services/file-upload.ts` with file handling utilities
+- [x] T011 [P] Create Convex schema file: `convex/schema.ts` with all entity definitions (users, cards, socialLinks, contacts, meetingMetadata)
+- [x] T012 [P] Create Convex users functions: `convex/users.ts` with syncFromClerk mutation and getCurrentUser query
+- [x] T013 [P] Create Convex client setup: `lib/convex-client.ts` with ConvexReactClient configuration
+- [x] T014 [P] Update root layout to wrap app with ConvexProvider: `app/_layout.tsx`
+- [x] T015 [P] Create validation utilities: `lib/validation.ts` with email, phone, URL validation functions
+- [x] T016 [P] Create vCard generation utilities: `lib/vcf.ts` with vCard file generation functions
+- [x] T017 [P] Create QR code service: `services/qr-code.ts` with QR code generation logic
+- [x] T018 [P] Create file upload service: `services/file-upload.ts` with file handling utilities
 - [ ] T019 Create custom auth hook: `hooks/use-auth.ts` for Clerk + Convex integration
 - [ ] T020 Create user sync function in Convex: `convex/users.ts` mutation to sync user from Clerk on auth events
 

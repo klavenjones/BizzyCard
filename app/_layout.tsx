@@ -11,9 +11,8 @@ import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
-import { ConvexReactClient, useConvexAuth } from 'convex/react';
-
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
+import { useConvexAuth } from 'convex/react';
+import { convexClient } from '@/lib/convex-client';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,7 +24,7 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+      <ConvexProviderWithClerk client={convexClient} useAuth={useAuth}>
         <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
           <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
           <Routes />
