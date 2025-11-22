@@ -36,9 +36,8 @@ Build a mobile application for tech professionals that functions as a digital bu
 
 **Constraints**:
 
-- Must work offline for viewing (out of scope per spec)
 - Resume file size limit: 10MB (assumption)
-- Network connectivity required for all operations
+- Network connectivity required for all operations (offline functionality is out of scope per spec)
 - Must support modern iOS and Android devices
 
 **Scale/Scope**:

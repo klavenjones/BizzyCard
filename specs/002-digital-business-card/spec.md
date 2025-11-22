@@ -114,7 +114,7 @@ Two users who both have the app installed can share cards with each other throug
 
 #### Profile Creation and Editing (Feature 1)
 
-- **FR-001**: System MUST allow users to create a digital card with the following profile fields: name (required), title, email (required), phone number, company, role, short bio, customizable tags, and optional profile photo/avatar
+- **FR-001**: System MUST allow users to create a digital card with the following profile fields: name (required), title, email (required), phone number, company, role, short bio, customizable tags, and optional profile photo/avatar (see FR-046 for explicit profile photo upload capability)
 - **FR-002**: System MUST allow users to add social links for the following platforms: Bluesky, LinkedIn, X (Twitter), Facebook, Instagram, GitHub, portfolio website, and other custom platforms
 - **FR-003**: System MUST allow users to upload and attach a resume file to their digital card
 - **FR-004**: System MUST allow users to edit any profile field, social link, resume, or profile photo at any time after card creation
@@ -139,8 +139,8 @@ Two users who both have the app installed can share cards with each other throug
 - **FR-020**: System MUST provide a "Copy Share Link" option that copies a unique, shareable URL to the user's clipboard
 - **FR-021**: System MUST provide a .vcf file export option that generates a vCard file containing the user's contact information
 - **FR-022**: System MUST generate unique share links for each user's digital card
-- **FR-023**: System MUST allow users to regenerate or revoke share links if needed
-- **FR-024**: System MUST ensure QR codes remain valid and accessible even if the user updates their card information
+- **FR-023**: System MUST allow users to regenerate share links if needed. Regenerating a share link creates a new unique shareId, effectively revoking the previous share link (the old link will no longer work)
+- **FR-024**: System MUST ensure QR codes remain valid and accessible even if the user updates their card information. QR codes encode the shareId (which does not change when card information is updated), ensuring the QR code continues to work and always displays the latest card information
 
 #### Public Web View (Feature 3)
 
@@ -155,22 +155,22 @@ Two users who both have the app installed can share cards with each other throug
 
 #### In-App Network/Contacts (Feature 4)
 
-- **FR-033**: System MUST provide a "Network" or "Contacts" tab where users can view digital cards they've received from other app users
+- **FR-033**: System MUST provide a "Network" tab where users can view digital cards they've received from other app users
 - **FR-034**: System MUST allow users to send their card to other app users through an in-app sharing mechanism. Users MUST be able to discover recipients by scanning their QR code or by looking them up via phone number or email address
 - **FR-035**: System MUST notify recipients when they receive a card from another app user
-- **FR-036**: System MUST allow recipients to accept or decline received cards
-- **FR-037**: System MUST add accepted cards to the user's Network/Contacts tab
+- **FR-036**: System MUST allow recipients to accept or decline received cards. When a card is declined, the notification is dismissed and the card is not added to the recipient's Network. Declined cards are not stored and the sender is not notified of the decline
+- **FR-037**: System MUST add accepted cards to the user's Network tab
 - **FR-038**: System MUST allow users to view full card details for any saved contact
 - **FR-039**: System MUST allow users to add tags to saved contacts for organization
 - **FR-040**: System MUST allow users to add metadata to saved contacts, including when and where they met
-- **FR-041**: System MUST allow users to search or filter their Network/Contacts by name, company, tags, or other criteria
+- **FR-041**: System MUST allow users to search or filter their Network by name, company, tags, or other criteria (e.g., title, role, email domain, or meeting location)
 - **FR-042**: System MUST allow users to share their own card directly from a saved contact's card view
 - **FR-043**: System MUST prevent duplicate entries when the same person shares their card multiple times (merge or update existing entry). Duplicate detection MUST match by email address first; if email addresses differ or are unavailable, match by phone number
-- **FR-045**: System MUST update existing saved contacts with the latest card information when a user accepts a card from someone already in their Network/Contacts, and MUST show a notification that the contact was updated
+- **FR-044**: System MUST display basic metadata (tags, meeting context) for each saved contact in the Network list
+- **FR-045**: System MUST update existing saved contacts with the latest card information when a user accepts a card from someone already in their Network, and MUST show a notification that the contact was updated
 - **FR-046**: System MUST allow users to upload an optional profile photo/avatar for their digital card
 - **FR-047**: System MUST allow users to remove or replace their profile photo at any time
 - **FR-048**: System MUST prevent sharing if a user has not completed onboarding (minimum required fields: name and email). When sharing is attempted, System MUST show a message prompting the user to complete onboarding before sharing
-- **FR-044**: System MUST display basic metadata (tags, meeting context) for each saved contact in the Network/Contacts list
 
 ### Key Entities
 

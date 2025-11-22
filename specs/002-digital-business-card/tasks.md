@@ -9,8 +9,8 @@
 
 This document breaks down the implementation of the digital business card application into actionable, dependency-ordered tasks. Tasks are organized by user story priority (P1, P2) to enable independent implementation and testing.
 
-**Total Tasks**: 105  
-**MVP Scope**: Phase 1-3 (Setup, Foundational, User Story 1) - 45 tasks
+**Total Tasks**: 107  
+**MVP Scope**: Phase 1-3 (Setup, Foundational, User Story 1) - 47 tasks
 
 ## Implementation Strategy
 
@@ -126,6 +126,8 @@ This document breaks down the implementation of the digital business card applic
 - [ ] T042 [US1] Integrate onboarding flow with card creation: Connect onboarding screens to Convex create mutation
 - [ ] T043 [US1] Integrate My Card screen with card data: Connect to use-card hook and display card preview
 - [ ] T044 [US1] Integrate edit functionality: Connect edit screen to update mutations with validation
+- [ ] T044a [US1] Add email validation: Implement email format validation in profile form (FR-008) - validate on input and show error messages
+- [ ] T044b [US1] Add phone validation: Implement phone number format validation in profile form (FR-009) - validate on input and show error messages
 - [ ] T045 [US1] Add onboarding completion check: Update users.onboardingCompleted when card created with name + email
 
 ## Phase 4: User Story 2 - Share Digital Card (P1)
@@ -165,13 +167,13 @@ This document breaks down the implementation of the digital business card applic
 
 ### Integration
 
-- [ ] T054 [US2] Integrate QR code generation: Connect QR code component to share link URL
+- [ ] T054 [US2] Integrate QR code generation: Connect QR code component to share link URL (FR-024: QR codes encode shareId which remains valid after card updates)
 - [ ] T055 [US2] Integrate AirDrop sharing: Use Expo Sharing API for AirDrop functionality
 - [ ] T056 [US2] Integrate email sharing: Use Expo Sharing API with pre-filled email content
 - [ ] T057 [US2] Integrate SMS sharing: Use Expo Sharing API with pre-filled SMS content
 - [ ] T058 [US2] Integrate copy share link: Copy share link URL to clipboard
 - [ ] T059 [US2] Integrate .vcf export: Generate and share .vcf file using vCard utilities
-- [ ] T060 [US2] Add share validation: Prevent sharing if onboarding not completed (FR-048)
+- [ ] T060 [US2] Add share validation: Prevent sharing if onboarding not completed (FR-048) - Show message prompting user to complete onboarding, disable sharing actions until onboarding is complete
 - [ ] T061 [US2] Add QR code save functionality: Allow saving QR code image to device gallery
 
 ## Phase 5: User Story 3 - Public Web View (P2)
@@ -262,7 +264,7 @@ This document breaks down the implementation of the digital business card applic
 
 - [ ] T089 [US4] Integrate QR scan for sharing: Connect QR scanner to sendCard mutation
 - [ ] T090 [US4] Integrate user lookup: Connect email/phone lookup to users queries and sendCard mutation
-- [ ] T091 [US4] Integrate contact acceptance: Connect accept/decline UI to acceptCard mutation
+- [ ] T091 [US4] Integrate contact acceptance: Connect accept/decline UI to acceptCard mutation (FR-036: decline dismisses notification without storing card)
 - [ ] T092 [US4] Integrate Network tab: Connect Network screen to use-contacts hook
 - [ ] T093 [US4] Integrate search/filter: Connect search component to filter contacts list
 - [ ] T094 [US4] Integrate tags and meeting metadata: Connect UI to update mutations
@@ -274,18 +276,20 @@ This document breaks down the implementation of the digital business card applic
 
 **Independent Test**: All edge cases handled gracefully, error messages user-friendly, loading states present, app feels polished.
 
+**Maps to**: Edge cases from spec.md (lines 100-109), Success Criteria validation (SC-001 through SC-012), Non-functional requirements (error handling, performance, accessibility)
+
 ---
 
-- [ ] T096 Add error handling for network failures: Handle connectivity issues during card operations
-- [ ] T097 Add loading states: Show loading indicators during async operations
-- [ ] T098 Add empty states: Show appropriate messages when no data (no contacts, no card, etc.)
-- [ ] T099 Handle invalid social media URLs: Validate and show error messages
-- [ ] T100 Handle file size limits: Validate resume size (10MB) and show error if exceeded
-- [ ] T101 Handle special characters: Ensure emoji and special characters work in profile fields, tags, social links
-- [ ] T102 Add share link revocation handling: Handle deleted cards gracefully in public web view
-- [ ] T103 Add accessibility improvements: Ensure all UI components are accessible
-- [ ] T104 Add error boundaries: Wrap screens with error boundaries for graceful error handling
-- [ ] T105 Performance optimization: Optimize queries, add pagination if needed for large contact lists
+- [ ] T096 Add error handling for network failures: Handle connectivity issues during card operations (Edge case: network connectivity issues during sharing/acceptance)
+- [ ] T097 Add loading states: Show loading indicators during async operations (Success Criteria: SC-002, SC-003, SC-008)
+- [ ] T098 Add empty states: Show appropriate messages when no data (no contacts, no card, etc.) (Edge case: empty states)
+- [ ] T099 Handle invalid social media URLs: Validate and show error messages (FR-010, Edge case: invalid/malformed social media URLs)
+- [ ] T100 Handle file size limits: Validate resume size (10MB) and show error if exceeded (Assumption: 10MB limit, Edge case: file size limits)
+- [ ] T101 Handle special characters: Ensure emoji and special characters work in profile fields, tags, social links (Edge case: special characters/emoji)
+- [ ] T102 Add share link revocation handling: Handle deleted cards gracefully in public web view (FR-032, Edge case: share link accessed after card deletion)
+- [ ] T103 Add accessibility improvements: Ensure all UI components are accessible (Non-functional requirement: accessibility)
+- [ ] T104 Add error boundaries: Wrap screens with error boundaries for graceful error handling (Non-functional requirement: error handling)
+- [ ] T105 Performance optimization: Optimize queries, add pagination if needed for large contact lists (SC-009: search/filter in under 10 seconds for up to 1000 contacts)
 
 ## Parallel Execution Examples
 
@@ -333,13 +337,13 @@ This document breaks down the implementation of the digital business card applic
 
 - **Phase 1 (Setup)**: 10 tasks
 - **Phase 2 (Foundational)**: 10 tasks
-- **Phase 3 (User Story 1)**: 25 tasks
+- **Phase 3 (User Story 1)**: 27 tasks (includes T044a, T044b for validation)
 - **Phase 4 (User Story 2)**: 16 tasks
 - **Phase 5 (User Story 3)**: 10 tasks
 - **Phase 6 (User Story 4)**: 24 tasks
 - **Phase 7 (Polish)**: 10 tasks
 
-**Total**: 105 tasks
+**Total**: 107 tasks
 
 ## MVP Scope Recommendation
 
@@ -352,6 +356,6 @@ This delivers:
 - Profile management (fields, social links, resume)
 - "My Card" screen with preview
 
-**Total MVP Tasks**: 45 tasks
+**Total MVP Tasks**: 47 tasks
 
 After MVP, proceed with Phase 4 (Sharing) to enable the core value proposition.
