@@ -1,0 +1,19 @@
+y# Dependencies
+node_modules/
+dist/
+build/
+coverage/
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Generated files
+*.tsbuildinfo
+.expo/
+web-build/
+
+# Logs
+*.log
+
