@@ -54,15 +54,15 @@ This is a React Native mobile app with Expo:
 ### Database & Backend Foundation
 
 - [x] T011 Create initial database migration in `supabase/migrations/001_initial_schema.sql` (all tables from data-model.md)
-- [ ] T012 Run database migration with `supabase db push` (requires Supabase project setup - see PHASE2_STATUS.md)
-- [ ] T013 Create Supabase storage buckets: `profile-pictures` (public) and `resumes` (public) (requires Supabase project - see PHASE2_STATUS.md)
+- [x] T012 Run database migration with `supabase db push` (requires Supabase project setup - see PHASE2_STATUS.md)
+- [x] T013 Create Supabase storage buckets: `profile-pictures` (public) and `resumes` (public) (requires Supabase project - see PHASE2_STATUS.md)
 - [x] T014 Configure RLS policies for all tables in migration file
-- [ ] T015 Create storage RLS policies for upload/read access (requires Supabase project - see PHASE2_STATUS.md)
+- [x] T015 Create storage RLS policies for upload/read access (requires Supabase project - see PHASE2_STATUS.md)
 
 ### Supabase Client & Types
 
 - [x] T016 Initialize Supabase client in `lib/supabase/client.ts`
-- [ ] T017 Generate TypeScript types from database schema: `supabase gen types typescript > lib/types/database.ts` (requires T012 completion - see PHASE2_STATUS.md)
+- [x] T017 Generate TypeScript types from database schema: `supabase gen types typescript > lib/types/database.ts` (requires T012 completion - see PHASE2_STATUS.md)
 - [x] T018 [P] Create domain types in `lib/types/profile.ts` (Profile, SocialLink domain models)
 - [x] T019 [P] Create domain types in `lib/types/contact.ts` (SavedContact domain models)
 
@@ -111,11 +111,11 @@ This is a React Native mobile app with Expo:
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T036 [P] [US1] Component test for sign-up form in `tests/components/auth/sign-up-form.test.tsx`
-- [ ] T037 [P] [US1] Component test for profile creation form in `tests/components/profile/profile-form.test.tsx`
-- [ ] T038 [P] [US1] Component test for My Card screen in `tests/components/my-card.test.tsx`
-- [ ] T039 [P] [US1] Integration test for complete profile creation flow in `tests/integration/profile-creation.test.tsx`
-- [ ] T040 [P] [US1] E2E test for sign-up and profile creation in `tests/e2e/create-profile.e2e.ts`
+- [x] T036 [P] [US1] Component test for sign-up form in `tests/components/auth/sign-up-form.test.tsx`
+- [x] T037 [P] [US1] Component test for profile creation form in `tests/components/profile/profile-form.test.tsx`
+- [x] T038 [P] [US1] Component test for My Card screen in `tests/components/my-card.test.tsx`
+- [x] T039 [P] [US1] Integration test for complete profile creation flow in `tests/integration/profile-creation.test.tsx`
+- [x] T040 [P] [US1] E2E test for sign-up and profile creation in `tests/e2e/create-profile.e2e.ts`
 
 ### Implementation for User Story 1
 
