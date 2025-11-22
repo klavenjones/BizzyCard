@@ -70,8 +70,8 @@ This document breaks down the implementation of the digital business card applic
 - [x] T016 [P] Create vCard generation utilities: `lib/vcf.ts` with vCard file generation functions
 - [x] T017 [P] Create QR code service: `services/qr-code.ts` with QR code generation logic
 - [x] T018 [P] Create file upload service: `services/file-upload.ts` with file handling utilities
-- [ ] T019 Create custom auth hook: `hooks/use-auth.ts` for Clerk + Convex integration
-- [ ] T020 Create user sync function in Convex: `convex/users.ts` mutation to sync user from Clerk on auth events
+- [x] T019 Create custom auth hook: `hooks/use-auth.ts` for Clerk + Convex integration
+- [x] T020 Create user sync function in Convex: `convex/users.ts` mutation to sync user from Clerk on auth events
 
 ## Phase 3: User Story 1 - Create and Edit Digital Card (P1)
 
