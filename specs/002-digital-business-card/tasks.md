@@ -43,12 +43,12 @@ This document breaks down the implementation of the digital business card applic
 
 ---
 
-- [ ] T001 Install Convex dependencies: `npm install convex @convex-dev/auth-clerk`
+- [ ] T001 Install Convex dependencies: `yarn add convex`
 - [ ] T002 Install Expo packages for file handling: `npx expo install expo-image-picker expo-document-picker expo-sharing expo-notifications expo-file-system`
-- [ ] T003 Install QR code library: `npm install react-native-qrcode-svg`
-- [ ] T004 Install testing dependencies: `npm install --save-dev jest @testing-library/react-native @testing-library/jest-native`
+- [ ] T003 Install QR code library: `yarn add react-native-qrcode-svg`
+- [ ] T004 Install testing dependencies: `yarn add -D jest @testing-library/react-native @testing-library/jest-native`
 - [ ] T005 Initialize Convex project: `npx convex dev` (creates convex/ directory and .env.local)
-- [ ] T006 Configure Clerk + Convex integration: Install auth provider `npx convex auth install clerk`
+- [ ] T006 Configure Clerk + Convex integration: Use these guides as reference: Clerk: <https://clerk.com/docs/guides/development/integrations/databases/convex>, Convex: <https://docs.convex.dev/auth/clerk>
 - [ ] T007 Create Convex auth configuration file: `convex/auth.config.js`
 - [ ] T008 Add environment variables to `.env.local`: CONVEX_URL, CLERK_DOMAIN, CLERK_APPLICATION_ID
 - [ ] T009 Create Jest configuration file: `jest.config.js` with Expo preset
