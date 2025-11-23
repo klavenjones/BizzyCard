@@ -3,6 +3,7 @@ import { Text } from '@/components/ui/text';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useSharing } from '@/hooks/use-sharing';
+import { useAuth } from '@/hooks/use-auth';
 import * as Sharing from 'expo-sharing';
 import { Linking } from 'react-native';
 import {
@@ -19,7 +20,12 @@ import {
  */
 export function ShareActions() {
   const { getShareLinkUrl, card, isLoading } = useSharing();
+  const { convexUser } = useAuth();
   const shareLinkUrl = getShareLinkUrl();
+
+  // Check if onboarding is completed (FR-048)
+  const isOnboardingCompleted = convexUser?.onboardingCompleted ?? false;
+  const canShare = isOnboardingCompleted && card !== null && shareLinkUrl !== null;
 
   const handleCopyLink = () => {
     if (!shareLinkUrl) {
@@ -122,12 +128,14 @@ export function ShareActions() {
     );
   }
 
-  if (!card || !shareLinkUrl) {
+  if (!card || !shareLinkUrl || !isOnboardingCompleted) {
     return (
       <Card>
         <CardContent className="py-6">
           <Text className="text-center text-muted-foreground">
-            No card found. Please complete onboarding first.
+            {!isOnboardingCompleted
+              ? 'Please complete onboarding before sharing your card.'
+              : 'No card found. Please complete onboarding first.'}
           </Text>
         </CardContent>
       </Card>
@@ -144,32 +152,52 @@ export function ShareActions() {
       </CardHeader>
       <CardContent className="gap-3">
         {/* Copy Link */}
-        <Button onPress={handleCopyLink} variant="outline" className="w-full">
+        <Button
+          onPress={handleCopyLink}
+          variant="outline"
+          className="w-full"
+          disabled={!canShare}>
           <LinkIcon className="size-4" />
           <Text>Copy Link</Text>
         </Button>
 
         {/* AirDrop (iOS) or Share (Android) */}
         {Platform.OS === 'ios' ? (
-          <Button onPress={handleAirDrop} variant="outline" className="w-full">
+          <Button
+            onPress={handleAirDrop}
+            variant="outline"
+            className="w-full"
+            disabled={!canShare}>
             <Airplay className="size-4" />
             <Text>AirDrop</Text>
           </Button>
         ) : (
-          <Button onPress={handleShare} variant="outline" className="w-full">
+          <Button
+            onPress={handleShare}
+            variant="outline"
+            className="w-full"
+            disabled={!canShare}>
             <Share2 className="size-4" />
             <Text>Share</Text>
           </Button>
         )}
 
         {/* Email */}
-        <Button onPress={handleEmail} variant="outline" className="w-full">
+        <Button
+          onPress={handleEmail}
+          variant="outline"
+          className="w-full"
+          disabled={!canShare}>
           <Mail className="size-4" />
           <Text>Email</Text>
         </Button>
 
         {/* SMS */}
-        <Button onPress={handleSMS} variant="outline" className="w-full">
+        <Button
+          onPress={handleSMS}
+          variant="outline"
+          className="w-full"
+          disabled={!canShare}>
           <MessageSquare className="size-4" />
           <Text>SMS</Text>
         </Button>

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useCard } from '@/hooks/use-card';
 import { useSocialLinks } from '@/hooks/use-social-links';
+import { useAuth } from '@/hooks/use-auth';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { generateVCardFile, CardData } from '@/lib/vcf';
@@ -18,6 +19,7 @@ import { useState } from 'react';
  */
 export function VCFGenerator() {
   const { card, isLoading: isCardLoading } = useCard();
+  const { convexUser } = useAuth();
   const { socialLinks, isLoading: isSocialLinksLoading } = useSocialLinks(
     card?._id
   );
@@ -29,6 +31,10 @@ export function VCFGenerator() {
   );
 
   const [isGenerating, setIsGenerating] = useState(false);
+
+  // Check if onboarding is completed (FR-048)
+  const isOnboardingCompleted = convexUser?.onboardingCompleted ?? false;
+  const canShare = isOnboardingCompleted && card !== null;
 
   const handleGenerateVCF = async () => {
     if (!card) {
@@ -95,12 +101,14 @@ export function VCFGenerator() {
     );
   }
 
-  if (!card) {
+  if (!card || !isOnboardingCompleted) {
     return (
       <Card>
         <CardContent className="py-6">
           <Text className="text-center text-muted-foreground">
-            No card found. Please complete onboarding first.
+            {!isOnboardingCompleted
+              ? 'Please complete onboarding before exporting your card.'
+              : 'No card found. Please complete onboarding first.'}
           </Text>
         </CardContent>
       </Card>
@@ -118,7 +126,7 @@ export function VCFGenerator() {
       <CardContent>
         <Button
           onPress={handleGenerateVCF}
-          disabled={isGenerating}
+          disabled={isGenerating || !canShare}
           variant="outline"
           className="w-full">
           <Download className="size-4" />

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import QRCode, { QRCodeRef } from 'react-native-qrcode-svg';
 import { useSharing } from '@/hooks/use-sharing';
+import { useAuth } from '@/hooks/use-auth';
 import { useRef, useState } from 'react';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -15,10 +16,15 @@ import { Download } from 'lucide-react-native';
  */
 export function QRCodeDisplay() {
   const { getQRCodeData, card, isLoading } = useSharing();
+  const { convexUser } = useAuth();
   const qrCodeRef = useRef<QRCodeRef>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   const qrCodeData = getQRCodeData();
+
+  // Check if onboarding is completed (FR-048)
+  const isOnboardingCompleted = convexUser?.onboardingCompleted ?? false;
+  const canShare = isOnboardingCompleted && card !== null && qrCodeData !== null;
 
   const handleSaveQRCode = async () => {
     if (!qrCodeRef.current || !qrCodeData) {
@@ -74,13 +80,15 @@ export function QRCodeDisplay() {
     );
   }
 
-  if (!card || !qrCodeData) {
+  if (!card || !qrCodeData || !isOnboardingCompleted) {
     return (
       <Card>
         <CardContent className="py-6">
           <Text className="text-center text-muted-foreground">
-            No card found. Please complete onboarding first.
-          </Text>
+            {!isOnboardingCompleted
+              ? 'Please complete onboarding before sharing your card.'
+              : 'No card found. Please complete onboarding first.'}
+        </Text>
         </CardContent>
       </Card>
     );
@@ -114,7 +122,7 @@ export function QRCodeDisplay() {
         </View>
         <Button
           onPress={handleSaveQRCode}
-          disabled={isSaving}
+          disabled={isSaving || !canShare}
           variant="outline"
           className="w-full">
           <Download className="size-4" />

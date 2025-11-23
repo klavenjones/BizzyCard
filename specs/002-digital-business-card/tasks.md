@@ -162,19 +162,19 @@ This document breaks down the implementation of the digital business card applic
 
 ### Screens
 
-- [ ] T052 [US2] Create Share screen: `app/(tabs)/share.tsx` with QR code and sharing options
-- [ ] T053 [US2] Add share link generation: Generate unique shareId on card creation in Convex
+- [x] T052 [US2] Create Share screen: `app/(tabs)/share.tsx` with QR code and sharing options
+- [x] T053 [US2] Add share link generation: Generate unique shareId on card creation in Convex
 
 ### Integration
 
-- [ ] T054 [US2] Integrate QR code generation: Connect QR code component to share link URL (FR-024: QR codes encode shareId which remains valid after card updates)
-- [ ] T055 [US2] Integrate AirDrop sharing: Use Expo Sharing API for AirDrop functionality
-- [ ] T056 [US2] Integrate email sharing: Use Expo Sharing API with pre-filled email content
-- [ ] T057 [US2] Integrate SMS sharing: Use Expo Sharing API with pre-filled SMS content
-- [ ] T058 [US2] Integrate copy share link: Copy share link URL to clipboard
-- [ ] T059 [US2] Integrate .vcf export: Generate and share .vcf file using vCard utilities
-- [ ] T060 [US2] Add share validation: Prevent sharing if onboarding not completed (FR-048) - Show message prompting user to complete onboarding, disable sharing actions until onboarding is complete
-- [ ] T061 [US2] Add QR code save functionality: Allow saving QR code image to device gallery
+- [x] T054 [US2] Integrate QR code generation: Connect QR code component to share link URL (FR-024: QR codes encode shareId which remains valid after card updates)
+- [x] T055 [US2] Integrate AirDrop sharing: Use Expo Sharing API for AirDrop functionality
+- [x] T056 [US2] Integrate email sharing: Use Expo Sharing API with pre-filled email content
+- [x] T057 [US2] Integrate SMS sharing: Use Expo Sharing API with pre-filled SMS content
+- [x] T058 [US2] Integrate copy share link: Copy share link URL to clipboard
+- [x] T059 [US2] Integrate .vcf export: Generate and share .vcf file using vCard utilities
+- [x] T060 [US2] Add share validation: Prevent sharing if onboarding not completed (FR-048) - Show message prompting user to complete onboarding, disable sharing actions until onboarding is complete
+- [x] T061 [US2] Add QR code save functionality: Allow saving QR code image to device gallery
 
 ## Phase 5: User Story 3 - Public Web View (P2)
 
