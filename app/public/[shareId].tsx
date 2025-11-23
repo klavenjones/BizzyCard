@@ -28,7 +28,7 @@ interface CardData {
 /**
  * Public web view for digital business cards.
  * Displays card information for non-app users who access share links.
- * 
+ *
  * This route is accessible without authentication and works in web browsers.
  */
 export default function PublicCardView() {
@@ -58,12 +58,18 @@ export default function PublicCardView() {
         throw new Error('Convex URL not configured');
       }
 
+      // T067: Integrate public card view - Connect route to Convex HTTP endpoint
       // Fetch card data from Convex HTTP endpoint
       const response = await fetch(`${convexUrl}/public/${id}`);
-      
+
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error('Card not found. This share link may be invalid or the card may have been deleted.');
+          // Handle 404 for invalid share IDs or deleted cards (T070)
+          throw new Error(
+            'Card not found. This share link may be invalid or the card may have been deleted.'
+          );
+        } else if (response.status === 500) {
+          throw new Error('Server error. Please try again later.');
         }
         throw new Error(`Failed to load card: ${response.statusText}`);
       }
@@ -78,15 +84,16 @@ export default function PublicCardView() {
     }
   };
 
+  // T068: Integrate .vcf download - Add download button linking to /public/:shareId/vcf endpoint
   const handleDownloadVcf = async () => {
     if (!shareId) return;
-    
+
     const convexUrl = process.env.EXPO_PUBLIC_CONVEX_URL;
     if (!convexUrl) return;
 
     // Open vCard download endpoint
     const vcfUrl = `${convexUrl}/public/${shareId}/vcf`;
-    
+
     if (Platform.OS === 'web') {
       // For web, fetch and trigger download
       try {
@@ -116,6 +123,7 @@ export default function PublicCardView() {
     }
   };
 
+  // T069: Integrate resume download - Add download button linking to /public/:shareId/resume endpoint
   const handleDownloadResume = () => {
     if (!shareId || !cardData?.resumeFileUrl) return;
 
@@ -130,10 +138,17 @@ export default function PublicCardView() {
     }
   };
 
+  // T071: Add social links functionality - Make social links clickable and open in new tabs
   const handleSocialLinkPress = (url: string) => {
-    Linking.openURL(url).catch((err) => {
-      console.error('Failed to open URL:', err);
-    });
+    if (Platform.OS === 'web' && typeof window !== 'undefined') {
+      // For web, open in new tab
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      // For mobile, open in browser
+      Linking.openURL(url).catch((err) => {
+        console.error('Failed to open URL:', err);
+      });
+    }
   };
 
   const getInitials = (name: string): string => {
@@ -147,7 +162,7 @@ export default function PublicCardView() {
 
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center min-h-screen bg-background">
+      <View className="min-h-screen flex-1 items-center justify-center bg-background">
         <ActivityIndicator size="large" />
         <Text className="mt-4 text-muted-foreground">Loading card...</Text>
       </View>
@@ -156,10 +171,10 @@ export default function PublicCardView() {
 
   if (error || !cardData) {
     return (
-      <View className="flex-1 items-center justify-center min-h-screen bg-background p-4">
+      <View className="min-h-screen flex-1 items-center justify-center bg-background p-4">
         <Card className="w-full max-w-md">
           <CardContent className="py-8">
-            <Text variant="h3" className="text-center mb-2">
+            <Text variant="h3" className="mb-2 text-center">
               Card Not Found
             </Text>
             <Text className="text-center text-muted-foreground">
@@ -177,14 +192,14 @@ export default function PublicCardView() {
         <Card className="w-full">
           <CardHeader className="items-center gap-4 pb-6">
             {cardData.profilePhotoUrl ? (
-              <Avatar className="size-24 md:size-32">
+              <Avatar className="size-24 md:size-32" alt={`${cardData.name}'s profile photo`}>
                 <AvatarImage source={{ uri: cardData.profilePhotoUrl }} />
                 <AvatarFallback>
                   <Text className="text-2xl md:text-3xl">{getInitials(cardData.name)}</Text>
                 </AvatarFallback>
               </Avatar>
             ) : (
-              <Avatar className="size-24 md:size-32">
+              <Avatar className="size-24 md:size-32" alt={`${cardData.name}'s avatar`}>
                 <AvatarFallback>
                   <Text className="text-2xl md:text-3xl">{getInitials(cardData.name)}</Text>
                 </AvatarFallback>
@@ -216,7 +231,9 @@ export default function PublicCardView() {
           <CardContent className="gap-6 pb-8">
             {/* Contact Information */}
             <View className="gap-2">
-              <Text variant="small" className="font-semibold text-muted-foreground text-sm md:text-base">
+              <Text
+                variant="small"
+                className="text-sm font-semibold text-muted-foreground md:text-base">
                 Contact
               </Text>
               <View className="gap-1">
@@ -230,25 +247,29 @@ export default function PublicCardView() {
             {/* Bio */}
             {cardData.bio && (
               <View className="gap-2">
-                <Text variant="small" className="font-semibold text-muted-foreground text-sm md:text-base">
+                <Text
+                  variant="small"
+                  className="text-sm font-semibold text-muted-foreground md:text-base">
                   About
                 </Text>
-                <Text className="text-base md:text-lg leading-relaxed">{cardData.bio}</Text>
+                <Text className="text-base leading-relaxed md:text-lg">{cardData.bio}</Text>
               </View>
             )}
 
             {/* Tags */}
             {cardData.tags && cardData.tags.length > 0 && (
               <View className="gap-2">
-                <Text variant="small" className="font-semibold text-muted-foreground text-sm md:text-base">
+                <Text
+                  variant="small"
+                  className="text-sm font-semibold text-muted-foreground md:text-base">
                   Tags
                 </Text>
                 <View className="flex-row flex-wrap gap-2">
                   {cardData.tags.map((tag, index) => (
-                    <View
-                      key={index}
-                      className="rounded-md bg-muted px-3 py-1.5">
-                      <Text variant="small" className="text-sm md:text-base">{tag}</Text>
+                    <View key={index} className="rounded-md bg-muted px-3 py-1.5">
+                      <Text variant="small" className="text-sm md:text-base">
+                        {tag}
+                      </Text>
                     </View>
                   ))}
                 </View>
@@ -258,14 +279,16 @@ export default function PublicCardView() {
             {/* Social Links */}
             {cardData.socialLinks && cardData.socialLinks.length > 0 && (
               <View className="gap-2">
-                <Text variant="small" className="font-semibold text-muted-foreground text-sm md:text-base">
+                <Text
+                  variant="small"
+                  className="text-sm font-semibold text-muted-foreground md:text-base">
                   Social Links
                 </Text>
                 <View className="gap-2">
                   {cardData.socialLinks.map((link, index) => (
                     <Text
                       key={index}
-                      className="text-primary underline text-base md:text-lg"
+                      className="text-base text-primary underline md:text-lg"
                       onPress={() => handleSocialLinkPress(link.url)}>
                       {link.platform.charAt(0).toUpperCase() + link.platform.slice(1)}
                     </Text>
@@ -275,18 +298,13 @@ export default function PublicCardView() {
             )}
 
             {/* Download Actions */}
-            <View className="gap-3 pt-4 border-t border-border">
-              <Button
-                onPress={handleDownloadVcf}
-                className="w-full">
+            <View className="gap-3 border-t border-border pt-4">
+              <Button onPress={handleDownloadVcf} className="w-full">
                 <Text className="text-base md:text-lg">Download Contact (.vcf)</Text>
               </Button>
-              
+
               {cardData.resumeFileUrl && (
-                <Button
-                  onPress={handleDownloadResume}
-                  variant="outline"
-                  className="w-full">
+                <Button onPress={handleDownloadResume} variant="outline" className="w-full">
                   <Text className="text-base md:text-lg">Download Resume</Text>
                 </Button>
               )}
@@ -297,4 +315,3 @@ export default function PublicCardView() {
     </ScrollView>
   );
 }
-

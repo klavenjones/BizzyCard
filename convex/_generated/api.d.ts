@@ -9,8 +9,10 @@
  */
 
 import type * as cards from "../cards.js";
+import type * as contacts from "../contacts.js";
 import type * as files from "../files.js";
 import type * as http from "../http.js";
+import type * as sharing from "../sharing.js";
 import type * as socialLinks from "../socialLinks.js";
 import type * as users from "../users.js";
 
@@ -22,8 +24,10 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   cards: typeof cards;
+  contacts: typeof contacts;
   files: typeof files;
   http: typeof http;
+  sharing: typeof sharing;
   socialLinks: typeof socialLinks;
   users: typeof users;
 }>;

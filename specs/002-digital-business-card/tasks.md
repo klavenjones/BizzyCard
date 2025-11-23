@@ -205,11 +205,11 @@ This document breaks down the implementation of the digital business card applic
 
 ### Integration
 
-- [ ] T067 [US3] Integrate public card view: Connect route to Convex HTTP endpoint
-- [ ] T068 [US3] Integrate .vcf download: Add download button linking to /public/:shareId/vcf endpoint
-- [ ] T069 [US3] Integrate resume download: Add download button linking to /public/:shareId/resume endpoint
-- [ ] T070 [US3] Add error handling: Handle 404 for invalid share IDs or deleted cards
-- [ ] T071 [US3] Add social links functionality: Make social links clickable and open in new tabs
+- [x] T067 [US3] Integrate public card view: Connect route to Convex HTTP endpoint
+- [x] T068 [US3] Integrate .vcf download: Add download button linking to /public/:shareId/vcf endpoint
+- [x] T069 [US3] Integrate resume download: Add download button linking to /public/:shareId/resume endpoint
+- [x] T070 [US3] Add error handling: Handle 404 for invalid share IDs or deleted cards
+- [x] T071 [US3] Add social links functionality: Make social links clickable and open in new tabs
 
 ## Phase 6: User Story 4 - In-App Network/Contacts (P2)
 
@@ -230,24 +230,24 @@ This document breaks down the implementation of the digital business card applic
 
 ### Convex Backend Functions
 
-- [ ] T072 [US4] Create contacts queries: `convex/contacts.ts` with getByOwnerId and getById queries
-- [ ] T073 [US4] Create contacts mutations: `convex/contacts.ts` with acceptCard mutation (with duplicate detection)
-- [ ] T074 [US4] Create contacts update mutations: `convex/contacts.ts` with updateTags and addMeetingMetadata mutations
-- [ ] T075 [US4] Create contacts remove mutation: `convex/contacts.ts` with remove mutation
-- [ ] T076 [US4] Create sharing mutation: `convex/sharing.ts` with sendCard mutation for in-app sharing
-- [ ] T077 [US4] Implement duplicate detection logic: Email-first, phone-fallback matching in acceptCard mutation
-- [ ] T078 [US4] Create users lookup queries: `convex/users.ts` with getByEmail and getByPhone queries for in-app sharing
+- [x] T072 [US4] Create contacts queries: `convex/contacts.ts` with getByOwnerId and getById queries
+- [x] T073 [US4] Create contacts mutations: `convex/contacts.ts` with acceptCard mutation (with duplicate detection)
+- [x] T074 [US4] Create contacts update mutations: `convex/contacts.ts` with updateTags and addMeetingMetadata mutations
+- [x] T075 [US4] Create contacts remove mutation: `convex/contacts.ts` with remove mutation
+- [x] T076 [US4] Create sharing mutation: `convex/sharing.ts` with sendCard mutation for in-app sharing
+- [x] T077 [US4] Implement duplicate detection logic: Email-first, phone-fallback matching in acceptCard mutation
+- [x] T078 [US4] Create users lookup queries: `convex/users.ts` with getByEmail and getByPhone queries for in-app sharing
 
 ### Custom Hooks
 
-- [ ] T079 [US4] Create use-contacts hook: `hooks/use-contacts.ts` for contacts data fetching and management
-- [ ] T080 [US4] Create use-notifications hook: `hooks/use-notifications.ts` for push notification handling
+- [x] T079 [US4] Create use-contacts hook: `hooks/use-contacts.ts` for contacts data fetching and management
+- [x] T080 [US4] Create use-notifications hook: `hooks/use-notifications.ts` for push notification handling
 
 ### UI Components
 
-- [ ] T081 [US4] Create contact list component: `components/network/contact-list.tsx` displaying saved contacts
-- [ ] T082 [US4] Create contact card component: `components/network/contact-card.tsx` for individual contact view
-- [ ] T083 [US4] Create contact search component: `components/network/contact-search.tsx` for search/filter functionality
+- [x] T081 [US4] Create contact list component: `components/network/contact-list.tsx` displaying saved contacts
+- [x] T082 [US4] Create contact card component: `components/network/contact-card.tsx` for individual contact view
+- [x] T083 [US4] Create contact search component: `components/network/contact-search.tsx` for search/filter functionality
 
 ### Screens
 
