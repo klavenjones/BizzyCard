@@ -163,6 +163,15 @@ export const create = mutation({
       updatedAt: now,
     });
 
+    // Update user's onboardingCompleted status (T045)
+    // Card is created with name + email (minimum required), so onboarding is complete
+    if (!user.onboardingCompleted) {
+      await ctx.db.patch(user._id, {
+        onboardingCompleted: true,
+        updatedAt: now,
+      });
+    }
+
     return await ctx.db.get(cardId);
   },
 });

@@ -123,12 +123,12 @@ This document breaks down the implementation of the digital business card applic
 
 ### Integration
 
-- [ ] T042 [US1] Integrate onboarding flow with card creation: Connect onboarding screens to Convex create mutation
-- [ ] T043 [US1] Integrate My Card screen with card data: Connect to use-card hook and display card preview
-- [ ] T044 [US1] Integrate edit functionality: Connect edit screen to update mutations with validation
-- [ ] T044a [US1] Add email validation: Implement email format validation in profile form (FR-008) - validate on input and show error messages
-- [ ] T044b [US1] Add phone validation: Implement phone number format validation in profile form (FR-009) - validate on input and show error messages
-- [ ] T045 [US1] Add onboarding completion check: Update users.onboardingCompleted when card created with name + email
+- [x] T042 [US1] Integrate onboarding flow with card creation: Connect onboarding screens to Convex create mutation
+- [x] T043 [US1] Integrate My Card screen with card data: Connect to use-card hook and display card preview
+- [x] T044 [US1] Integrate edit functionality: Connect edit screen to update mutations with validation
+- [x] T044a [US1] Add email validation: Implement email format validation in profile form (FR-008) - validate on input and show error messages
+- [x] T044b [US1] Add phone validation: Implement phone number format validation in profile form (FR-009) - validate on input and show error messages
+- [x] T045 [US1] Add onboarding completion check: Update users.onboardingCompleted when card created with name + email
 
 ## Phase 4: User Story 2 - Share Digital Card (P1)
 

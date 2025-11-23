@@ -29,6 +29,47 @@ export default function OnboardingProfileScreen() {
     phoneNumber?: string;
   }>({});
 
+  // Real-time validation for email (T044a)
+  const validateEmail = React.useCallback((emailValue: string) => {
+    if (!emailValue.trim()) {
+      return 'Email is required';
+    }
+    if (!isValidEmail(emailValue)) {
+      return 'Please enter a valid email address';
+    }
+    return undefined;
+  }, []);
+
+  // Real-time validation for phone (T044b)
+  const validatePhone = React.useCallback((phoneValue: string) => {
+    if (phoneValue && !isValidPhone(phoneValue)) {
+      return 'Please enter a valid phone number';
+    }
+    return undefined;
+  }, []);
+
+  // Validate email on input change
+  const handleEmailChange = React.useCallback((value: string) => {
+    setEmail(value);
+    if (value.trim()) {
+      const error = validateEmail(value);
+      setErrors((prev) => ({ ...prev, email: error }));
+    } else {
+      setErrors((prev) => ({ ...prev, email: undefined }));
+    }
+  }, [validateEmail]);
+
+  // Validate phone on input change
+  const handlePhoneChange = React.useCallback((value: string) => {
+    setPhoneNumber(value);
+    if (value.trim()) {
+      const error = validatePhone(value);
+      setErrors((prev) => ({ ...prev, phoneNumber: error }));
+    } else {
+      setErrors((prev) => ({ ...prev, phoneNumber: undefined }));
+    }
+  }, [validatePhone]);
+
   const validateForm = (): boolean => {
     const newErrors: typeof errors = {};
 
@@ -36,14 +77,14 @@ export default function OnboardingProfileScreen() {
       newErrors.name = 'Name is required';
     }
 
-    if (!email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!isValidEmail(email)) {
-      newErrors.email = 'Please enter a valid email address';
+    const emailError = validateEmail(email);
+    if (emailError) {
+      newErrors.email = emailError;
     }
 
-    if (phoneNumber && !isValidPhone(phoneNumber)) {
-      newErrors.phoneNumber = 'Please enter a valid phone number';
+    const phoneError = validatePhone(phoneNumber);
+    if (phoneError) {
+      newErrors.phoneNumber = phoneError;
     }
 
     setErrors(newErrors);
@@ -112,7 +153,7 @@ export default function OnboardingProfileScreen() {
                 id="email"
                 placeholder="john@example.com"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={handleEmailChange}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoComplete="email"
@@ -128,7 +169,7 @@ export default function OnboardingProfileScreen() {
                 id="phoneNumber"
                 placeholder="+1 (555) 123-4567"
                 value={phoneNumber}
-                onChangeText={setPhoneNumber}
+                onChangeText={handlePhoneChange}
                 keyboardType="phone-pad"
                 autoComplete="tel"
               />
