@@ -13,6 +13,7 @@ import * as React from 'react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
 import { useConvexAuth } from 'convex/react';
 import { convexClient } from '@/lib/convex-client';
+import { initializeNotifications } from '@/services/notifications';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,6 +47,13 @@ function Routes() {
       SplashScreen.hideAsync();
     }
   }, [isLoaded]);
+
+  // Initialize notifications when app loads
+  React.useEffect(() => {
+    initializeNotifications().catch((error) => {
+      console.error('Error initializing notifications:', error);
+    });
+  }, []);
 
   if (!isLoaded) {
     return null;

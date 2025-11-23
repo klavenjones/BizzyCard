@@ -251,24 +251,24 @@ This document breaks down the implementation of the digital business card applic
 
 ### Screens
 
-- [ ] T084 [US4] Create Network tab screen: `app/(tabs)/network.tsx` with contact list and search
-- [ ] T085 [US4] Create contact detail screen: `app/card/[id].tsx` for viewing saved contact cards
-- [ ] T086 [US4] Add QR scan functionality: Integrate QR code scanner for in-app card sharing
-- [ ] T087 [US4] Add user lookup UI: Create UI for email/phone lookup in Share screen
+- [x] T084 [US4] Create Network tab screen: `app/(tabs)/network.tsx` with contact list and search
+- [x] T085 [US4] Create contact detail screen: `app/card/[id].tsx` for viewing saved contact cards
+- [x] T086 [US4] Add QR scan functionality: Integrate QR code scanner for in-app card sharing
+- [x] T087 [US4] Add user lookup UI: Create UI for email/phone lookup in Share screen
 
 ### Services
 
-- [ ] T088 [US4] Create notifications service: `services/notifications.ts` for push notification setup and delivery
+- [x] T088 [US4] Create notifications service: `services/notifications.ts` for push notification setup and delivery
 
 ### Integration
 
-- [ ] T089 [US4] Integrate QR scan for sharing: Connect QR scanner to sendCard mutation
-- [ ] T090 [US4] Integrate user lookup: Connect email/phone lookup to users queries and sendCard mutation
-- [ ] T091 [US4] Integrate contact acceptance: Connect accept/decline UI to acceptCard mutation (FR-036: decline dismisses notification without storing card)
-- [ ] T092 [US4] Integrate Network tab: Connect Network screen to use-contacts hook
-- [ ] T093 [US4] Integrate search/filter: Connect search component to filter contacts list
-- [ ] T094 [US4] Integrate tags and meeting metadata: Connect UI to update mutations
-- [ ] T095 [US4] Integrate push notifications: Set up notifications for card sharing events
+- [x] T089 [US4] Integrate QR scan for sharing: Connect QR scanner to sendCard mutation
+- [x] T090 [US4] Integrate user lookup: Connect email/phone lookup to users queries and sendCard mutation
+- [x] T091 [US4] Integrate contact acceptance: Connect accept/decline UI to acceptCard mutation (FR-036: decline dismisses notification without storing card)
+- [x] T092 [US4] Integrate Network tab: Connect Network screen to use-contacts hook
+- [x] T093 [US4] Integrate search/filter: Connect search component to filter contacts list
+- [x] T094 [US4] Integrate tags and meeting metadata: Connect UI to update mutations
+- [x] T095 [US4] Integrate push notifications: Set up notifications for card sharing events
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 

@@ -50,3 +50,31 @@ export function isValidShareId(shareId: string): boolean {
   return shareIdRegex.test(shareId);
 }
 
+/**
+ * Extracts share ID from a share link URL.
+ * @param url - Share link URL (e.g., "https://app.bizzycard.com/public/abc123")
+ * @returns Share ID if found, null otherwise
+ */
+export function extractShareIdFromUrl(url: string): string | null {
+  if (!url || typeof url !== "string") {
+    return null;
+  }
+
+  // Match patterns like:
+  // - /public/{shareId}
+  // - /public/{shareId}/
+  // - https://domain.com/public/{shareId}
+  const match = url.match(/\/public\/([a-zA-Z0-9_-]{10,50})/);
+  
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  // If no match, try to extract as direct shareId (if URL is just the shareId)
+  if (isValidShareId(url)) {
+    return url;
+  }
+
+  return null;
+}
+
