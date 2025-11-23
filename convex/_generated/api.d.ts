@@ -10,6 +10,7 @@
 
 import type * as cards from "../cards.js";
 import type * as files from "../files.js";
+import type * as http from "../http.js";
 import type * as socialLinks from "../socialLinks.js";
 import type * as users from "../users.js";
 
@@ -22,6 +23,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   cards: typeof cards;
   files: typeof files;
+  http: typeof http;
   socialLinks: typeof socialLinks;
   users: typeof users;
 }>;

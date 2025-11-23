@@ -194,14 +194,14 @@ This document breaks down the implementation of the digital business card applic
 
 ### Convex Backend Functions
 
-- [ ] T062 [US3] Create HTTP endpoint for public card view: `convex/http.ts` with GET /public/:shareId endpoint
-- [ ] T063 [US3] Create HTTP endpoint for .vcf download: `convex/http.ts` with GET /public/:shareId/vcf endpoint
-- [ ] T064 [US3] Create HTTP endpoint for resume download: `convex/http.ts` with GET /public/:shareId/resume endpoint
+- [x] T062 [US3] Create HTTP endpoint for public card view: `convex/http.ts` with GET /public/:shareId endpoint
+- [x] T063 [US3] Create HTTP endpoint for .vcf download: `convex/http.ts` with GET /public/:shareId/vcf endpoint
+- [x] T064 [US3] Create HTTP endpoint for resume download: `convex/http.ts` with GET /public/:shareId/resume endpoint
 
 ### Screens
 
-- [ ] T065 [US3] Create public web view route: `app/public/[shareId].tsx` displaying card in web browser
-- [ ] T066 [US3] Add responsive styling: Ensure public web view works on mobile and desktop browsers
+- [x] T065 [US3] Create public web view route: `app/public/[shareId].tsx` displaying card in web browser
+- [x] T066 [US3] Add responsive styling: Ensure public web view works on mobile and desktop browsers
 
 ### Integration
 
