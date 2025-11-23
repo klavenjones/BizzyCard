@@ -481,3 +481,83 @@ export const removeResume = mutation({
   },
 });
 
+/**
+ * Regenerate the share link ID for the current user's card.
+ * This allows users to revoke old share links and create new ones.
+ */
+export const regenerateShareId = mutation({
+  args: {},
+  handler: async (ctx) => {
+    // Get the authenticated user identity from Clerk
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const clerkUserId = identity.subject;
+
+    // Find the user by Clerk ID
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerkUserId", (q) => q.eq("clerkUserId", clerkUserId))
+      .first();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Find the card for this user
+    const card = await ctx.db
+      .query("cards")
+      .withIndex("by_userId", (q) => q.eq("userId", user._id))
+      .first();
+
+    if (!card) {
+      throw new Error("Card not found");
+    }
+
+    // Generate a new unique share ID
+    let newShareId = generateShareId();
+    let attempts = 0;
+    while (attempts < 5) {
+      const existing = await ctx.db
+        .query("cards")
+        .withIndex("by_shareId", (q) => q.eq("shareId", newShareId))
+        .first();
+
+      if (!existing) {
+        break;
+      }
+      newShareId = generateShareId();
+      attempts++;
+    }
+
+    // Update the card with new share ID
+    await ctx.db.patch(card._id, {
+      shareId: newShareId,
+      updatedAt: Date.now(),
+    });
+
+    return await ctx.db.get(card._id);
+  },
+});
+
+/**
+ * Get a card by share ID (for public web views).
+ * This query does not require authentication.
+ */
+export const getByShareId = query({
+  args: {
+    shareId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    // Find the card by share ID
+    const card = await ctx.db
+      .query("cards")
+      .withIndex("by_shareId", (q) => q.eq("shareId", args.shareId))
+      .first();
+
+    return card ?? null;
+  },
+});
+

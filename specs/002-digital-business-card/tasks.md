@@ -147,18 +147,18 @@ This document breaks down the implementation of the digital business card applic
 
 ### Convex Backend Functions
 
-- [ ] T046 [US2] Create cards share link mutation: `convex/cards.ts` with regenerateShareId mutation
-- [ ] T047 [US2] Create cards share query: `convex/cards.ts` with getByShareId query (for public web views)
+- [x] T046 [US2] Create cards share link mutation: `convex/cards.ts` with regenerateShareId mutation
+- [x] T047 [US2] Create cards share query: `convex/cards.ts` with getByShareId query (for public web views)
 
 ### Custom Hooks
 
-- [ ] T048 [US2] Create use-sharing hook: `hooks/use-sharing.ts` for sharing functionality
+- [x] T048 [US2] Create use-sharing hook: `hooks/use-sharing.ts` for sharing functionality
 
 ### UI Components
 
-- [ ] T049 [US2] Create QR code display component: `components/card/qr-code-display.tsx` showing QR code with save option
-- [ ] T050 [US2] Create share actions component: `components/sharing/share-actions.tsx` with AirDrop, email, SMS, copy link buttons
-- [ ] T051 [US2] Create vcf generator component: `components/sharing/vcf-generator.tsx` for .vcf file generation
+- [x] T049 [US2] Create QR code display component: `components/card/qr-code-display.tsx` showing QR code with save option
+- [x] T050 [US2] Create share actions component: `components/sharing/share-actions.tsx` with AirDrop, email, SMS, copy link buttons
+- [x] T051 [US2] Create vcf generator component: `components/sharing/vcf-generator.tsx` for .vcf file generation
 
 ### Screens
 
