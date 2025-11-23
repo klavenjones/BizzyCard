@@ -90,13 +90,13 @@ This document breaks down the implementation of the digital business card applic
 
 ### Convex Backend Functions
 
-- [ ] T021 [US1] Create cards query: `convex/cards.ts` with getCurrentUserCard query
-- [ ] T022 [US1] Create cards mutation: `convex/cards.ts` with create mutation (onboarding)
-- [ ] T023 [US1] Create cards update mutation: `convex/cards.ts` with update mutation
-- [ ] T024 [US1] Create cards file mutations: `convex/cards.ts` with updateProfilePhoto, updateResume, removeProfilePhoto, removeResume
-- [ ] T025 [US1] Create socialLinks queries: `convex/socialLinks.ts` with getByCardId query
-- [ ] T026 [US1] Create socialLinks mutations: `convex/socialLinks.ts` with add, update, remove mutations
-- [ ] T027 [US1] Create files functions: `convex/files.ts` with getUrl query for secure file downloads
+- [x] T021 [US1] Create cards query: `convex/cards.ts` with getCurrentUserCard query
+- [x] T022 [US1] Create cards mutation: `convex/cards.ts` with create mutation (onboarding)
+- [x] T023 [US1] Create cards update mutation: `convex/cards.ts` with update mutation
+- [x] T024 [US1] Create cards file mutations: `convex/cards.ts` with updateProfilePhoto, updateResume, removeProfilePhoto, removeResume
+- [x] T025 [US1] Create socialLinks queries: `convex/socialLinks.ts` with getByCardId query
+- [x] T026 [US1] Create socialLinks mutations: `convex/socialLinks.ts` with add, update, remove mutations
+- [x] T027 [US1] Create files functions: `convex/files.ts` with getUrl query for secure file downloads
 
 ### Custom Hooks
 

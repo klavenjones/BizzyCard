@@ -8,6 +8,9 @@
  * @module
  */
 
+import type * as cards from "../cards.js";
+import type * as files from "../files.js";
+import type * as socialLinks from "../socialLinks.js";
 import type * as users from "../users.js";
 
 import type {
@@ -17,6 +20,9 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  cards: typeof cards;
+  files: typeof files;
+  socialLinks: typeof socialLinks;
   users: typeof users;
 }>;
 
