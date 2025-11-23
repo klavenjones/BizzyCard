@@ -1,5 +1,16 @@
 import { v } from "convex/values";
-import { query } from "./_generated/server";
+import { query, action } from "./_generated/server";
+
+/**
+ * Generate an upload URL for file uploads.
+ * Returns a URL that can be used to upload a file to Convex storage.
+ */
+export const generateUploadUrl = action({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.storage.generateUploadUrl();
+  },
+});
 
 /**
  * Get a secure download URL for a file.

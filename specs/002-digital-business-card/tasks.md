@@ -100,26 +100,26 @@ This document breaks down the implementation of the digital business card applic
 
 ### Custom Hooks
 
-- [ ] T028 [US1] Create use-card hook: `hooks/use-card.ts` for card data fetching and mutations
-- [ ] T029 [US1] Create use-social-links hook: `hooks/use-social-links.ts` for social links management
+- [x] T028 [US1] Create use-card hook: `hooks/use-card.ts` for card data fetching and mutations
+- [x] T029 [US1] Create use-social-links hook: `hooks/use-social-links.ts` for social links management
 
 ### UI Components
 
-- [ ] T030 [US1] Create card preview component: `components/card/card-preview.tsx` displaying card information
-- [ ] T031 [US1] Create profile form component: `components/card/profile-form.tsx` for editing profile fields
-- [ ] T032 [US1] Create social links form component: `components/card/social-links-form.tsx` for managing social links
-- [ ] T033 [US1] Create file upload component: `components/card/file-upload.tsx` for resume and profile photo uploads
+- [x] T030 [US1] Create card preview component: `components/card/card-preview.tsx` displaying card information
+- [x] T031 [US1] Create profile form component: `components/card/profile-form.tsx` for editing profile fields
+- [x] T032 [US1] Create social links form component: `components/card/social-links-form.tsx` for managing social links
+- [x] T033 [US1] Create file upload component: `components/card/file-upload.tsx` for resume and profile photo uploads
 
 ### Screens
 
-- [ ] T034 [US1] Create onboarding layout: `app/onboarding/_layout.tsx` with navigation structure
-- [ ] T035 [US1] Create onboarding index screen: `app/onboarding/index.tsx` (start of onboarding)
-- [ ] T036 [US1] Create onboarding profile screen: `app/onboarding/profile.tsx` for profile fields entry
-- [ ] T037 [US1] Create onboarding social links screen: `app/onboarding/social-links.tsx` for social links setup
-- [ ] T038 [US1] Create onboarding resume screen: `app/onboarding/resume.tsx` for optional resume upload
-- [ ] T039 [US1] Create tabs layout: `app/(tabs)/_layout.tsx` with tab navigation (My Card, Share, Network)
-- [ ] T040 [US1] Create My Card screen: `app/(tabs)/my-card.tsx` showing card preview with edit access
-- [ ] T041 [US1] Create card edit screen: `app/card/edit.tsx` for editing own card details
+- [x] T034 [US1] Create onboarding layout: `app/onboarding/_layout.tsx` with navigation structure
+- [x] T035 [US1] Create onboarding index screen: `app/onboarding/index.tsx` (start of onboarding)
+- [x] T036 [US1] Create onboarding profile screen: `app/onboarding/profile.tsx` for profile fields entry
+- [x] T037 [US1] Create onboarding social links screen: `app/onboarding/social-links.tsx` for social links setup
+- [x] T038 [US1] Create onboarding resume screen: `app/onboarding/resume.tsx` for optional resume upload
+- [x] T039 [US1] Create tabs layout: `app/(tabs)/_layout.tsx` with tab navigation (My Card, Share, Network)
+- [x] T040 [US1] Create My Card screen: `app/(tabs)/my-card.tsx` showing card preview with edit access
+- [x] T041 [US1] Create card edit screen: `app/card/edit.tsx` for editing own card details
 
 ### Integration
 
